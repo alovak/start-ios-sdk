@@ -9,6 +9,8 @@
 #import "PayfortException.h"
 
 NSExceptionName const PayfortExceptionCardFieldsInvalid = @"PayfortExceptionCardFieldsInvalid";
+NSExceptionName const PayfortExceptionTokenDataInvalid = @"PayfortExceptionTokenDataInvalid";
+
 NSString *const PayfortExceptionKeyErrors = @"PayfortExceptionKeyErrors";
 
 @implementation PayfortException

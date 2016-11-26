@@ -1,5 +1,5 @@
 //
-//  PayfortException.h
+//  PayfortToken.h
 //  StartSDK
 //
 //  Created by drif on 11/26/16.
@@ -10,10 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern NSExceptionName const PayfortExceptionCardFieldsInvalid;
-extern NSString *const PayfortExceptionKeyErrors;
+@protocol PayfortToken <NSObject>
 
-@interface PayfortException : NSException
+@property (nonatomic, copy, readonly) NSString *tokenId;
 
 @end
 

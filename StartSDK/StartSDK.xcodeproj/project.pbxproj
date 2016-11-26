@@ -7,18 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2F2E200069E1BC649DF219CC /* PayfortCardBrandDetector.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F2E23FDD47AD1B990CBD288 /* PayfortCardBrandDetector.h */; };
-		2F2E23ACA6A9D29F9757309A /* PayfortException.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E236AD51C835FD409A667 /* PayfortException.m */; };
-		2F2E23E22DC8501E395320A5 /* NSString+Payfort.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E20754CA1BEF1D039259B /* NSString+Payfort.m */; };
-		2F2E28B9263DD6A103605F3E /* PayfortCard.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F2E2D3574EC856C792874A7 /* PayfortCard.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2F2E2B55324579CCA6B296FA /* PayfortCardBrandDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E29E52EC614A6B46B6B44 /* PayfortCardBrandDetector.m */; };
-		2F2E2D07AA62236630A5E3BD /* NSDate+Payfort.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E2CC0346F98E3F3EB45BB /* NSDate+Payfort.m */; };
-		2F2E2F0EF5A0E4F9088C150C /* PayfortCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E210A453698BE1530FEEF /* PayfortCard.m */; };
+		2F2E21454CB36C74A79E7DBD /* PayfortStart.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F2E2B554A1BAABA4C19CAA2 /* PayfortStart.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2F2E2161BA8C70D6A16D853C /* PayfortTokenRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E200D3CE4FBD1991EB7C4 /* PayfortTokenRequest.m */; };
+		2F2E22E1D2A8D7A4D629C5B7 /* PayfortStart.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E209290C0056BAC1F8E78 /* PayfortStart.m */; };
+		2F2E22ED05A95B7CF0E72FE8 /* PayfortCardBrandDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E2223F6BF1C6EE4C6544A /* PayfortCardBrandDetector.m */; };
+		2F2E23A5940B900789B362AB /* PayfortAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E26C2E1F286679A49A13A /* PayfortAPIClient.m */; };
+		2F2E250C295F20A0E4C8BE5D /* PayfortStartTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E2CC4E93DC11CD8853F4A /* PayfortStartTests.m */; };
+		2F2E250E47FB29B26B140563 /* PayfortCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E20950FE54A93A28FB15B /* PayfortCard.m */; };
+		2F2E27E83BC0F23E5A782986 /* PayfortTokenRequestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E2BCA266B73D6121C7F2D /* PayfortTokenRequestTests.m */; };
+		2F2E28BF3CF96DA9D843CC30 /* PayfortToken.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F2E2A4D2456F02E11040650 /* PayfortToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2F2E292629C628BE4792384B /* PayfortCard.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F2E2BC38A6718033A58FF43 /* PayfortCard.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2F2E2AEA105A53BACB2C75CA /* NSString+Payfort.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E2B24513DB6989D9DF9A7 /* NSString+Payfort.m */; };
+		2F2E2CECF995EE223A541453 /* PayfortException.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F2E2F94B0B19915E99D4EFA /* PayfortException.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2F2E2D306676E18744817BB0 /* PayfortAPIClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E2D5044750A16AAF1CE95 /* PayfortAPIClientTests.m */; };
+		2F2E2D65D2CA5BFB4092B1B4 /* PayfortCardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E24A7665C4E578DF76BC1 /* PayfortCardTests.m */; };
+		2F2E2E0E6949871EBEF5B24F /* PayfortUtilsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E28A7DBC3F422AE8A18F3 /* PayfortUtilsTests.m */; };
+		2F2E2E2291B0D00B359AECAE /* PayfortTokenEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E2F798B440006BBCF4445 /* PayfortTokenEntity.m */; };
+		2F2E2E39CFA02012CB8454E5 /* NSDate+Payfort.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E21D3B3B77CD467ACE8D5 /* NSDate+Payfort.m */; };
+		2F2E2E96CAAC2DA1C2512D59 /* PayfortException.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E208A85C95EB4A3DC1024 /* PayfortException.m */; };
 		831FA9451DE983D900B6B467 /* StartSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 831FA93B1DE983D900B6B467 /* StartSDK.framework */; };
 		831FA94C1DE983D900B6B467 /* StartSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 831FA93E1DE983D900B6B467 /* StartSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		831FA9561DE99D6B00B6B467 /* PayfortCardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 831FA9551DE99D6B00B6B467 /* PayfortCardTests.m */; };
-		831FA9571DE9AC7C00B6B467 /* PayfortException.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F2E2E8CA1B435B88FC530D5 /* PayfortException.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		831FA9591DE9B99E00B6B467 /* PayfortUtilsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 831FA9581DE9B99E00B6B467 /* PayfortUtilsTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,23 +40,36 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2F2E20754CA1BEF1D039259B /* NSString+Payfort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Payfort.m"; sourceTree = "<group>"; };
-		2F2E210A453698BE1530FEEF /* PayfortCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayfortCard.m; sourceTree = "<group>"; };
-		2F2E236AD51C835FD409A667 /* PayfortException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayfortException.m; sourceTree = "<group>"; };
-		2F2E23FDD47AD1B990CBD288 /* PayfortCardBrandDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayfortCardBrandDetector.h; sourceTree = "<group>"; };
-		2F2E280D9F10CFBC3ECE6BB1 /* NSDate+Payfort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Payfort.h"; sourceTree = "<group>"; };
-		2F2E28C58FB331C1E4CE3EED /* NSString+Payfort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Payfort.h"; sourceTree = "<group>"; };
-		2F2E29E52EC614A6B46B6B44 /* PayfortCardBrandDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayfortCardBrandDetector.m; sourceTree = "<group>"; };
-		2F2E2CC0346F98E3F3EB45BB /* NSDate+Payfort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Payfort.m"; sourceTree = "<group>"; };
-		2F2E2D3574EC856C792874A7 /* PayfortCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayfortCard.h; sourceTree = "<group>"; };
-		2F2E2E8CA1B435B88FC530D5 /* PayfortException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayfortException.h; sourceTree = "<group>"; };
+		2F2E200D3CE4FBD1991EB7C4 /* PayfortTokenRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayfortTokenRequest.m; sourceTree = "<group>"; };
+		2F2E20154E9AC46AFA907F8B /* PayfortTokenEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayfortTokenEntity.h; sourceTree = "<group>"; };
+		2F2E208A85C95EB4A3DC1024 /* PayfortException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayfortException.m; sourceTree = "<group>"; };
+		2F2E209290C0056BAC1F8E78 /* PayfortStart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayfortStart.m; sourceTree = "<group>"; };
+		2F2E20950FE54A93A28FB15B /* PayfortCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayfortCard.m; sourceTree = "<group>"; };
+		2F2E2142CF40B82066D59F69 /* PayfortTokenRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayfortTokenRequest.h; sourceTree = "<group>"; };
+		2F2E21D3B3B77CD467ACE8D5 /* NSDate+Payfort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Payfort.m"; sourceTree = "<group>"; };
+		2F2E2223F6BF1C6EE4C6544A /* PayfortCardBrandDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayfortCardBrandDetector.m; sourceTree = "<group>"; };
+		2F2E2457C2FEC39CCDEAF7ED /* NSDate+Payfort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Payfort.h"; sourceTree = "<group>"; };
+		2F2E24A7665C4E578DF76BC1 /* PayfortCardTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayfortCardTests.m; sourceTree = "<group>"; };
+		2F2E26C2E1F286679A49A13A /* PayfortAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayfortAPIClient.m; sourceTree = "<group>"; };
+		2F2E2894D310D12A9408F797 /* NSString+Payfort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Payfort.h"; sourceTree = "<group>"; };
+		2F2E2898CF65A88EAFDE76AE /* PayfortCardBrandDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayfortCardBrandDetector.h; sourceTree = "<group>"; };
+		2F2E28A7DBC3F422AE8A18F3 /* PayfortUtilsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayfortUtilsTests.m; sourceTree = "<group>"; };
+		2F2E2A4D2456F02E11040650 /* PayfortToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayfortToken.h; sourceTree = "<group>"; };
+		2F2E2B24513DB6989D9DF9A7 /* NSString+Payfort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Payfort.m"; sourceTree = "<group>"; };
+		2F2E2B554A1BAABA4C19CAA2 /* PayfortStart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayfortStart.h; sourceTree = "<group>"; };
+		2F2E2BC38A6718033A58FF43 /* PayfortCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayfortCard.h; sourceTree = "<group>"; };
+		2F2E2BCA266B73D6121C7F2D /* PayfortTokenRequestTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayfortTokenRequestTests.m; sourceTree = "<group>"; };
+		2F2E2CBBAFFF8D9F48EA4452 /* PayfortAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayfortAPIClient.h; sourceTree = "<group>"; };
+		2F2E2CC4E93DC11CD8853F4A /* PayfortStartTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayfortStartTests.m; sourceTree = "<group>"; };
+		2F2E2D5044750A16AAF1CE95 /* PayfortAPIClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayfortAPIClientTests.m; sourceTree = "<group>"; };
+		2F2E2F29B41E8E1C036735DF /* PayfortAPIClientRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayfortAPIClientRequest.h; sourceTree = "<group>"; };
+		2F2E2F798B440006BBCF4445 /* PayfortTokenEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayfortTokenEntity.m; sourceTree = "<group>"; };
+		2F2E2F94B0B19915E99D4EFA /* PayfortException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayfortException.h; sourceTree = "<group>"; };
 		831FA93B1DE983D900B6B467 /* StartSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StartSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		831FA93E1DE983D900B6B467 /* StartSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StartSDK.h; sourceTree = "<group>"; };
 		831FA93F1DE983D900B6B467 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		831FA9441DE983D900B6B467 /* StartSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StartSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		831FA94B1DE983D900B6B467 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		831FA9551DE99D6B00B6B467 /* PayfortCardTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayfortCardTests.m; sourceTree = "<group>"; };
-		831FA9581DE9B99E00B6B467 /* PayfortUtilsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayfortUtilsTests.m; sourceTree = "<group>"; };
+		831FA94B1DE983D900B6B467 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = StartSDKTests/Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,11 +91,72 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F2E20E93A8F3C92099091A9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2F2E21D3B3B77CD467ACE8D5 /* NSDate+Payfort.m */,
+				2F2E2457C2FEC39CCDEAF7ED /* NSDate+Payfort.h */,
+				2F2E2894D310D12A9408F797 /* NSString+Payfort.h */,
+				2F2E2B24513DB6989D9DF9A7 /* NSString+Payfort.m */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		2F2E22D5B3F6D0F428451378 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				2F2E200D3CE4FBD1991EB7C4 /* PayfortTokenRequest.m */,
+				2F2E2142CF40B82066D59F69 /* PayfortTokenRequest.h */,
+				2F2E26C2E1F286679A49A13A /* PayfortAPIClient.m */,
+				2F2E2F29B41E8E1C036735DF /* PayfortAPIClientRequest.h */,
+				2F2E2CBBAFFF8D9F48EA4452 /* PayfortAPIClient.h */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		2F2E25C3D28209DE5E5FC00E /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				2F2E2CC4E93DC11CD8853F4A /* PayfortStartTests.m */,
+				2F2E28A7DBC3F422AE8A18F3 /* PayfortUtilsTests.m */,
+				2F2E24A7665C4E578DF76BC1 /* PayfortCardTests.m */,
+				2F2E2BCA266B73D6121C7F2D /* PayfortTokenRequestTests.m */,
+				2F2E2D5044750A16AAF1CE95 /* PayfortAPIClientTests.m */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		2F2E2BD6058CF4E0F51CC3C2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2F2E20154E9AC46AFA907F8B /* PayfortTokenEntity.h */,
+				2F2E2F798B440006BBCF4445 /* PayfortTokenEntity.m */,
+				2F2E2BC38A6718033A58FF43 /* PayfortCard.h */,
+				2F2E20950FE54A93A28FB15B /* PayfortCard.m */,
+				2F2E2B554A1BAABA4C19CAA2 /* PayfortStart.h */,
+				2F2E209290C0056BAC1F8E78 /* PayfortStart.m */,
+				2F2E2A4D2456F02E11040650 /* PayfortToken.h */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2F2E2D2E9D21F0A27E5532A9 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				2F2E2898CF65A88EAFDE76AE /* PayfortCardBrandDetector.h */,
+				2F2E2F94B0B19915E99D4EFA /* PayfortException.h */,
+				2F2E2223F6BF1C6EE4C6544A /* PayfortCardBrandDetector.m */,
+				2F2E208A85C95EB4A3DC1024 /* PayfortException.m */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		831FA9311DE983D900B6B467 = {
 			isa = PBXGroup;
 			children = (
 				831FA93D1DE983D900B6B467 /* StartSDK */,
 				831FA9481DE983D900B6B467 /* StartSDKTests */,
+				831FA94B1DE983D900B6B467 /* Info.plist */,
 				831FA93C1DE983D900B6B467 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -91,18 +173,12 @@
 		831FA93D1DE983D900B6B467 /* StartSDK */ = {
 			isa = PBXGroup;
 			children = (
+				2F2E20E93A8F3C92099091A9 /* Extensions */,
+				2F2E22D5B3F6D0F428451378 /* Network */,
+				2F2E2BD6058CF4E0F51CC3C2 /* Models */,
+				2F2E2D2E9D21F0A27E5532A9 /* Common */,
 				831FA93E1DE983D900B6B467 /* StartSDK.h */,
 				831FA93F1DE983D900B6B467 /* Info.plist */,
-				2F2E210A453698BE1530FEEF /* PayfortCard.m */,
-				2F2E2D3574EC856C792874A7 /* PayfortCard.h */,
-				2F2E20754CA1BEF1D039259B /* NSString+Payfort.m */,
-				2F2E28C58FB331C1E4CE3EED /* NSString+Payfort.h */,
-				2F2E2CC0346F98E3F3EB45BB /* NSDate+Payfort.m */,
-				2F2E280D9F10CFBC3ECE6BB1 /* NSDate+Payfort.h */,
-				2F2E236AD51C835FD409A667 /* PayfortException.m */,
-				2F2E2E8CA1B435B88FC530D5 /* PayfortException.h */,
-				2F2E29E52EC614A6B46B6B44 /* PayfortCardBrandDetector.m */,
-				2F2E23FDD47AD1B990CBD288 /* PayfortCardBrandDetector.h */,
 			);
 			path = StartSDK;
 			sourceTree = "<group>";
@@ -110,9 +186,7 @@
 		831FA9481DE983D900B6B467 /* StartSDKTests */ = {
 			isa = PBXGroup;
 			children = (
-				831FA94B1DE983D900B6B467 /* Info.plist */,
-				831FA9551DE99D6B00B6B467 /* PayfortCardTests.m */,
-				831FA9581DE9B99E00B6B467 /* PayfortUtilsTests.m */,
+				2F2E25C3D28209DE5E5FC00E /* Tests */,
 			);
 			path = StartSDKTests;
 			sourceTree = "<group>";
@@ -124,10 +198,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				831FA9571DE9AC7C00B6B467 /* PayfortException.h in Headers */,
 				831FA94C1DE983D900B6B467 /* StartSDK.h in Headers */,
-				2F2E28B9263DD6A103605F3E /* PayfortCard.h in Headers */,
-				2F2E200069E1BC649DF219CC /* PayfortCardBrandDetector.h in Headers */,
+				2F2E292629C628BE4792384B /* PayfortCard.h in Headers */,
+				2F2E21454CB36C74A79E7DBD /* PayfortStart.h in Headers */,
+				2F2E28BF3CF96DA9D843CC30 /* PayfortToken.h in Headers */,
+				2F2E2CECF995EE223A541453 /* PayfortException.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,11 +305,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F2E2F0EF5A0E4F9088C150C /* PayfortCard.m in Sources */,
-				2F2E23E22DC8501E395320A5 /* NSString+Payfort.m in Sources */,
-				2F2E2D07AA62236630A5E3BD /* NSDate+Payfort.m in Sources */,
-				2F2E23ACA6A9D29F9757309A /* PayfortException.m in Sources */,
-				2F2E2B55324579CCA6B296FA /* PayfortCardBrandDetector.m in Sources */,
+				2F2E2E39CFA02012CB8454E5 /* NSDate+Payfort.m in Sources */,
+				2F2E2AEA105A53BACB2C75CA /* NSString+Payfort.m in Sources */,
+				2F2E2161BA8C70D6A16D853C /* PayfortTokenRequest.m in Sources */,
+				2F2E23A5940B900789B362AB /* PayfortAPIClient.m in Sources */,
+				2F2E2E2291B0D00B359AECAE /* PayfortTokenEntity.m in Sources */,
+				2F2E250E47FB29B26B140563 /* PayfortCard.m in Sources */,
+				2F2E22E1D2A8D7A4D629C5B7 /* PayfortStart.m in Sources */,
+				2F2E22ED05A95B7CF0E72FE8 /* PayfortCardBrandDetector.m in Sources */,
+				2F2E2E96CAAC2DA1C2512D59 /* PayfortException.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,8 +321,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				831FA9561DE99D6B00B6B467 /* PayfortCardTests.m in Sources */,
-				831FA9591DE9B99E00B6B467 /* PayfortUtilsTests.m in Sources */,
+				2F2E250C295F20A0E4C8BE5D /* PayfortStartTests.m in Sources */,
+				2F2E2E0E6949871EBEF5B24F /* PayfortUtilsTests.m in Sources */,
+				2F2E2D65D2CA5BFB4092B1B4 /* PayfortCardTests.m in Sources */,
+				2F2E27E83BC0F23E5A782986 /* PayfortTokenRequestTests.m in Sources */,
+				2F2E2D306676E18744817BB0 /* PayfortAPIClientTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

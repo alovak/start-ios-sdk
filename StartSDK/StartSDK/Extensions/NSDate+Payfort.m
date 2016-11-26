@@ -12,14 +12,12 @@
 
 #pragma mark - Interface methods
 
-- (NSInteger)payfortYear
-{
+- (NSInteger)payfortYear {
     NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
     return [calendar component:NSCalendarUnitYear fromDate:self];
 }
 
-- (NSInteger)payfortMonth
-{
+- (NSInteger)payfortMonth {
     NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
     return [calendar component:NSCalendarUnitMonth fromDate:self];
 }
