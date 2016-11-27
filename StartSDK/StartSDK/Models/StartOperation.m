@@ -98,7 +98,18 @@
 
 - (void)handleError:(NSError *)error {
     if (error.domain == StartAPIClientError) {
-        error = [NSError errorWithDomain:StartError code:StartErrorCodeInternalError userInfo:nil];
+
+        NSString *response = error.userInfo[StartAPIClientErrorKeyResponse];
+        NSDictionary *userInfo;
+        if (response) {
+            userInfo = @{
+                    StartErrorKeyResponse: response
+            };
+        }
+
+        StartErrorCode errorCode = (error.code == StartAPIClientErrorCodeInvalidAPIKey) ? StartErrorCodeInvalidAPIKey : StartErrorCodeInternalError;
+
+        error = [NSError errorWithDomain:StartError code:errorCode userInfo:userInfo];
     }
     _errorBlock(error);
 }

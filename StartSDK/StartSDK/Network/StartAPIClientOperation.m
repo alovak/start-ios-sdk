@@ -8,6 +8,7 @@
 
 #import "StartAPIClientOperation.h"
 #import "StartAPIClientRequest.h"
+#import "NSBundle+Start.h"
 
 @implementation StartAPIClientOperation {
     NSString *_base;
@@ -30,6 +31,7 @@
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:_request.method];
     [urlRequest addValue:_authorization forHTTPHeaderField:@"Authorization"];
+    [urlRequest addValue:[NSBundle bundleForClass:[self class]].startVersion forHTTPHeaderField:@"StartiOS"];
     [urlRequest addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [urlRequest addValue:@"application/json" forHTTPHeaderField:@"Accept"];
 
@@ -63,22 +65,37 @@
 
     if (!error) {
         if (data) {
+
+            NSDictionary *userInfo;
+            NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            if (responseString) {
+                userInfo = @{
+                        StartAPIClientErrorKeyResponse: responseString
+                };
+            }
+
             id responseJSON = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingOptions) 0 error:nil];
+            
             if ([responseJSON isKindOfClass:[NSDictionary class]]) {
                 if ([response isKindOfClass:[NSHTTPURLResponse class]] && ((NSHTTPURLResponse *)response).statusCode / 100 == 2) {
                     if ([_request processResponse:responseJSON]) {
                         _successBlock();
                     }
                     else {
-                        error = [NSError errorWithDomain:StartAPIClientError code:StartAPIClientErrorCodeInvalidResponse userInfo:nil];
+                        error = [NSError errorWithDomain:StartAPIClientError code:StartAPIClientErrorCodeInvalidResponse userInfo:userInfo];
                     }
                 }
                 else {
-                    error = [NSError errorWithDomain:StartAPIClientError code:StartAPIClientErrorCodeServerError userInfo:nil];
+                    if ([responseJSON[@"error"][@"type"] isEqualToString:@"authentication"]) {
+                        error = [NSError errorWithDomain:StartAPIClientError code:StartAPIClientErrorCodeInvalidAPIKey userInfo:userInfo];
+                    }
+                    else {
+                        error = [NSError errorWithDomain:StartAPIClientError code:StartAPIClientErrorCodeServerError userInfo:userInfo];
+                    }
                 };
             }
             else {
-                error = [NSError errorWithDomain:StartAPIClientError code:StartAPIClientErrorCodeInvalidResponse userInfo:nil];
+                error = [NSError errorWithDomain:StartAPIClientError code:StartAPIClientErrorCodeInvalidResponse userInfo:userInfo];
             }
         }
         else {
@@ -86,7 +103,7 @@
         }
     }
     if (error) {
-        if (_request.shouldRetry) {
+        if ((error.domain != StartAPIClientError || error.code != StartAPIClientErrorCodeInvalidAPIKey) && _request.shouldRetry) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (NSEC_PER_SEC * _request.retryInterval)), dispatch_get_main_queue(), ^{
                 if (self->_request.shouldRetry) {
                     [self startDataTask];

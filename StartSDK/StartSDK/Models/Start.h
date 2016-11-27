@@ -19,11 +19,13 @@ typedef void (^StartCancelBlock)();
 
 typedef NS_ENUM(NSInteger, StartErrorCode) {
     StartErrorCodeInternalError,
+    StartErrorCodeInvalidAPIKey,
     StartErrorCodeInvalidAmount,
     StartErrorCodeInvalidCurrency
 };
 
 extern NSErrorDomain const StartError;
+extern NSString *const StartErrorKeyResponse;
 
 @interface Start : NSObject
 

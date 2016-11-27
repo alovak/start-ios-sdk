@@ -71,7 +71,7 @@ typedef void (^StartAPIClientTestsBlock)(NSURLRequest *request);
 }
 
 - (NSString *)path {
-    return @"path";
+    return @"tokens";
 }
 
 - (NSDictionary *)params {
@@ -132,7 +132,8 @@ typedef void (^StartAPIClientTestsBlock)(NSURLRequest *request);
     session.onDataTask = ^(NSURLRequest *request) {
 
         XCTAssertEqualObjects(request.allHTTPHeaderFields[@"Authorization"], @"Basic ZXhhbXBsZQ==", @"Expecting valid authorization header");
-        XCTAssertEqualObjects(request.URL.absoluteString, @"http://example.com/path", @"Expecting valid URL");
+        XCTAssertEqual([request.allHTTPHeaderFields[@"StartiOS"] componentsSeparatedByString:@"."].count, 3, @"Expecting valid info header");
+        XCTAssertEqualObjects(request.URL.absoluteString, @"http://example.com/tokens", @"Expecting valid URL");
         XCTAssertEqualObjects([[NSString alloc] initWithData:request.HTTPBody encoding:NSUTF8StringEncoding], @"{\"key\":\"value\"}", @"Expecting valid body");
 
         [expectation fulfill];
@@ -200,6 +201,18 @@ typedef void (^StartAPIClientTestsBlock)(NSURLRequest *request);
     clientRequest.isForcedToFailProcess = YES;
     [self expectErrorCode:StartAPIClientErrorCodeInvalidResponse whilePerforming:clientRequest on:session with:cantProcessErrorExpectation];
 
+    XCTestExpectation *cantProcessErrorResponseExpectation = [self expectationWithDescription:@"Waiting for can't process error"];
+    StartAPIClientOperation *operation = [[StartAPIClientOperation alloc] initWithBase:@"http://example.com/"
+                                                                         authorization:@"Basic ZXhhbXBsZQ=="
+                                                                               session:session
+                                                                               request:clientRequest
+                                                                          successBlock:^{}
+                                                                            errorBlock:^(NSError *error) {
+                                                                                XCTAssertEqualObjects(error.userInfo[StartAPIClientErrorKeyResponse], @"{\"key\":\"value\"}", @"Expecting valid error");
+                                                                                [cantProcessErrorResponseExpectation fulfill];
+                                                                            }];
+    [operation perform];
+
     XCTestExpectation *invalidResponseExpectation = [self expectationWithDescription:@"Waiting for invalid response error"];
     clientRequest.isForcedToFailProcess = NO;
     session.data = [NSData data];
@@ -215,7 +228,7 @@ typedef void (^StartAPIClientTestsBlock)(NSURLRequest *request);
             @"key": @"value"
     };
 
-    StartAPIClientOperation *operation = [[StartAPIClientOperation alloc] initWithBase:@"http://example.com/"
+    operation = [[StartAPIClientOperation alloc] initWithBase:@"http://example.com/"
                                                                          authorization:@"Basic ZXhhbXBsZQ=="
                                                                                session:session
                                                                                request:clientRequest
@@ -242,6 +255,27 @@ typedef void (^StartAPIClientTestsBlock)(NSURLRequest *request);
                                                                           successBlock:^{}
                                                                             errorBlock:^(NSError *error) {
                                                                                 XCTAssertEqual(clientRequest.attemptsPerformed, 3, @"Expecting valid amount of attempts");
+                                                                                [expectation fulfill];
+                                                                            }];
+
+    [operation perform];
+
+    [self waitForExpectationsWithTimeout:1.0f handler:nil];
+}
+
+- (void)testNoRetry {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Waiting for error"];
+
+    StartAPIClientTestsRequest *clientRequest = [[StartAPIClientTestsRequest alloc] init];
+    clientRequest.attemptsExpected = 3;
+
+    StartAPIClientOperation *operation = [[StartAPIClientOperation alloc] initWithBase:@"https://api.start.payfort.com/"
+                                                                         authorization:@"Basic ZXhhbXBsZQ=="
+                                                                               session:NSURLSession.sharedSession
+                                                                               request:clientRequest
+                                                                          successBlock:^{}
+                                                                            errorBlock:^(NSError *error) {
+                                                                                XCTAssertEqual(clientRequest.attemptsPerformed, 1, @"Expecting valid amount of attempts");
                                                                                 [expectation fulfill];
                                                                             }];
 

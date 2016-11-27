@@ -11,6 +11,7 @@
 #import "StartAPIClientOperation.h"
 
 NSErrorDomain const StartAPIClientError = @"StartAPIClientError";
+NSErrorDomain const StartAPIClientErrorKeyResponse = @"StartAPIClientErrorKeyResponse";
 NSInteger const StartAPIClientRetryAttemptsCount = 3;
 NSTimeInterval const StartAPIClientRetryAttemptsInterval = 5.0;
 

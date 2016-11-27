@@ -16,6 +16,7 @@
 static NSString *const StartBase = @"https://api.start.payfort.com/";
 
 NSErrorDomain const StartError = @"StartError";
+NSString *const StartErrorKeyResponse = @"StartErrorKeyResponse";
 
 @implementation Start {
     StartAPIClient *_apiClient;

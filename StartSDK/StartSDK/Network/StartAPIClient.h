@@ -13,10 +13,12 @@ NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSInteger, StartAPIClientErrorCode) {
     StartAPIClientErrorCodeCantFormJSON,
     StartAPIClientErrorCodeInvalidResponse,
+    StartAPIClientErrorCodeInvalidAPIKey,
     StartAPIClientErrorCodeServerError
 };
 
 extern NSErrorDomain const StartAPIClientError;
+extern NSErrorDomain const StartAPIClientErrorKeyResponse;
 extern NSInteger const StartAPIClientRetryAttemptsCount;
 extern NSTimeInterval const StartAPIClientRetryAttemptsInterval;
 

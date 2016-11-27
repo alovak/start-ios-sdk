@@ -137,18 +137,34 @@ typedef void (^StartTestsBlock)();
 }
 
 - (void)testError {
-    XCTestExpectation *expectation = [self expectationWithDescription:@"Waiting for error"];
+    XCTestExpectation *authErrorExpectation = [self expectationWithDescription:@"Waiting for auth error"];
 
-    Start *start = [[Start alloc] initWithAPIKey:@"invalid api key"];
+    Start *start = [[Start alloc] initWithAPIKey:@"test_open_k_46dd87e36d3a5949aa68 api key"];
 
     [start createTokenForCard:self.card amount:1 currency:@"USD" successBlock:^(id <StartToken> token) {
     } errorBlock:^(NSError *error) {
+        XCTAssertTrue([error.userInfo[StartErrorKeyResponse] hasPrefix:@"{\"error\":"], @"Expecting response in error");
         XCTAssertEqual(error.domain, StartError, @"Expecting valid error domain");
-        XCTAssertEqual(error.code, StartErrorCodeInternalError, @"Expecting valid error code");
+        XCTAssertEqual(error.code, StartErrorCodeInvalidAPIKey, @"Expecting valid error code");
         XCTAssertTrue(NSThread.isMainThread, @"Expecting completion block on main thread");
-        [expectation fulfill];
+        [authErrorExpectation fulfill];
     } cancelBlock:^{
     }];
+
+    XCTestExpectation *internalErrorExpectation = [self expectationWithDescription:@"Waiting for internal error"];
+
+    StartAPIClient *client = [[StartAPIClient alloc] initWithBase:@"https://google.com/" apiKey:@"example"];
+    StartOperation *operation = [[StartOperation alloc] initWithAPIClient:client
+                                                                     card:self.card
+                                                                   amount:1
+                                                                 currency:@"USD"
+                                                             successBlock:^(id <StartToken> token) {}
+                                                               errorBlock:^(NSError *error) {
+                                                                   XCTAssertEqual(error.code, StartErrorCodeInternalError, @"Expecting valid error code");
+                                                                   [internalErrorExpectation fulfill];
+                                                               }
+                                                              cancelBlock:^{}];
+    [operation perform];
 
     [self waitForExpectationsWithTimeout:15.0f handler:nil];
 }
@@ -214,6 +230,7 @@ typedef void (^StartTestsBlock)();
                                                                                  successBlock:^(id <StartToken> token) {}
                                                                                    errorBlock:^(NSError *error) {}
                                                                                   cancelBlock:^{
+                                                                                      XCTAssertTrue(NSThread.isMainThread, @"Expecting completion block on main thread");
                                                                                       [expectation fulfill];
                                                                                   }];
     [operation perform];
