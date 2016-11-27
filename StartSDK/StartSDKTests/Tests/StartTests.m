@@ -11,27 +11,69 @@
 #import "StartCard.h"
 #import "StartToken.h"
 #import "NSDate+Start.h"
+#import "StartOperation.h"
+#import "StartAPIClient.h"
+#import "StartVerificationViewController.h"
 #import "StartTokenEntity.h"
 
 typedef void (^StartTestsBlock)();
 
-@interface StartTestsStart : Start
+@interface StartVerificationViewController (StartTests)
+
+- (void)onCancel:(UIButton *)button;
+
+@end
+
+@interface StartTestsVerificationViewController : StartVerificationViewController
+
+@end
+
+@implementation StartTestsVerificationViewController
+
+#pragma mark - StartVerificationViewController methods
+
+- (instancetype)initWithToken:(StartTokenEntity *)token
+                         base:(NSString *)base
+                  cancelBlock:(StartVerificationViewControllerCancelBlock)cancelBlock {
+    self = [super initWithToken:token base:base cancelBlock:cancelBlock];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [self onCancel:nil];
+    });
+    return self;
+}
+
+@end
+
+@interface StartOperation (StartTests)
+
+- (void)finalizeVerification;
+
+@end
+
+@interface StartTestsStartOperation : StartOperation
 
 @property (nonatomic, copy) StartTestsBlock onFinalize;
 
 @end
 
-@implementation StartTestsStart
+@implementation StartTestsStartOperation
 
-#pragma mark - Start methods
+#pragma mark - StartOperation methods
 
-- (void)finalizeVerificationForToken:(StartTokenEntity *)token
-                              amount:(NSInteger)amount
-                            currency:(NSString *)currency
-                        successBlock:(StartSuccessBlock)successBlock
-                          errorBlock:(StartErrorBlock)errorBlock
-                         cancelBlock:(StartCancelBlock)cancelBlock {
-    self.onFinalize();
+- (void)finalizeVerification {
+    if (self.onFinalize) {
+        self.onFinalize();
+    }
+    else {
+        [super finalizeVerification];
+    }
+}
+
+- (StartVerificationViewController *)verificationViewControllerWithCancelBlock:(StartVerificationViewControllerCancelBlock)cancelBlock {
+    StartTokenEntity *token = [[StartTokenEntity alloc] initWithDictionary:@{@"id": @"id", @"verification_required": @YES}];
+    return [[StartTestsVerificationViewController alloc] initWithToken:token
+                                                                  base:@""
+                                                           cancelBlock:cancelBlock];
 }
 
 @end
@@ -145,15 +187,36 @@ typedef void (^StartTestsBlock)();
 - (void)testTokenWithVerificationRequiredEnrolled {
     XCTestExpectation *expectation = [self expectationWithDescription:@"Waiting for finalization"];
 
-    StartTestsStart *start = [[StartTestsStart alloc] initWithAPIKey:@"live_open_k_55e06cde7fe8d3141a7e"];
-    start.onFinalize = ^{
+    StartAPIClient *client = [[StartAPIClient alloc] initWithBase:@"https://api.start.payfort.com/" apiKey:@"live_open_k_55e06cde7fe8d3141a7e"];
+    StartTestsStartOperation *operation = [[StartTestsStartOperation alloc] initWithAPIClient:client
+                                                                                         card:[self cardWithNumber:@"5453010000064154"]
+                                                                                       amount:1
+                                                                                     currency:@"USD"
+                                                                                 successBlock:^(id <StartToken> token) {}
+                                                                                   errorBlock:^(NSError *error) {}
+                                                                                  cancelBlock:^{}];
+    operation.onFinalize = ^{
         [expectation fulfill];
     };
+    [operation perform];
 
-    [start createTokenForCard:[self cardWithNumber:@"5453010000064154"] amount:1 currency:@"USD" successBlock:^(id <StartToken> token) {
-    } errorBlock:^(NSError *error) {
-    } cancelBlock:^{
-    }];
+    [self waitForExpectationsWithTimeout:10.0f handler:nil];
+}
+
+- (void)testTokenWithVerificationRequiredEnrolledAndCancelled {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Waiting for cancel"];
+
+    StartAPIClient *client = [[StartAPIClient alloc] initWithBase:@"https://api.start.payfort.com/" apiKey:@"live_open_k_55e06cde7fe8d3141a7e"];
+    StartTestsStartOperation *operation = [[StartTestsStartOperation alloc] initWithAPIClient:client
+                                                                                         card:[self cardWithNumber:@"5453010000064154"]
+                                                                                       amount:1
+                                                                                     currency:@"USD"
+                                                                                 successBlock:^(id <StartToken> token) {}
+                                                                                   errorBlock:^(NSError *error) {}
+                                                                                  cancelBlock:^{
+                                                                                      [expectation fulfill];
+                                                                                  }];
+    [operation perform];
 
     [self waitForExpectationsWithTimeout:10.0f handler:nil];
 }

@@ -20,7 +20,9 @@
 		2F2E27E83BC0F23E5A782986 /* StartTokenRequestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E2BCA266B73D6121C7F2D /* StartTokenRequestTests.m */; };
 		2F2E28BF3CF96DA9D843CC30 /* StartToken.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F2E2A4D2456F02E11040650 /* StartToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2F2E292629C628BE4792384B /* StartCard.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F2E2BC38A6718033A58FF43 /* StartCard.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2F2E296503CDD18AC5CD8032 /* StartOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E256AE2181D139C6B5F24 /* StartOperation.m */; };
 		2F2E2AEA105A53BACB2C75CA /* NSString+Start.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E2B24513DB6989D9DF9A7 /* NSString+Start.m */; };
+		2F2E2B51A00FDF347EA0903E /* StartAPIClientOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E2498ECC285BC1B070F93 /* StartAPIClientOperation.m */; };
 		2F2E2C9CB30FFE3408FBB16D /* NSNumber+Start.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E2EC544227404613523FC /* NSNumber+Start.m */; };
 		2F2E2CC4146EF88A85337434 /* StartVerification.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E25D6000C2655C3D8071E /* StartVerification.m */; };
 		2F2E2CECF995EE223A541453 /* StartException.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F2E2F94B0B19915E99D4EFA /* StartException.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -28,7 +30,6 @@
 		2F2E2D306676E18744817BB0 /* StartAPIClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E2D5044750A16AAF1CE95 /* StartAPIClientTests.m */; };
 		2F2E2D65D2CA5BFB4092B1B4 /* StartCardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E24A7665C4E578DF76BC1 /* StartCardTests.m */; };
 		2F2E2D9EB624DA583FE422BE /* StartWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E2A0471C0BA3907360E27 /* StartWebViewController.m */; };
-		2F2E2DB398DE6770DFA24B28 /* UIViewController+Start.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F2E24970D89F38240DE99E3 /* UIViewController+Start.h */; };
 		2F2E2E0E6949871EBEF5B24F /* StartUtilsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E28A7DBC3F422AE8A18F3 /* StartUtilsTests.m */; };
 		2F2E2E2291B0D00B359AECAE /* StartTokenEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E2F798B440006BBCF4445 /* StartTokenEntity.m */; };
 		2F2E2E39CFA02012CB8454E5 /* NSDate+Start.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E21D3B3B77CD467ACE8D5 /* NSDate+Start.m */; };
@@ -60,13 +61,17 @@
 		2F2E22974C55B33BA9EA50CB /* StartVerificationRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartVerificationRequest.m; sourceTree = "<group>"; };
 		2F2E2457C2FEC39CCDEAF7ED /* NSDate+Start.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Start.h"; sourceTree = "<group>"; };
 		2F2E24970D89F38240DE99E3 /* UIViewController+Start.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Start.h"; sourceTree = "<group>"; };
+		2F2E2498ECC285BC1B070F93 /* StartAPIClientOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartAPIClientOperation.m; sourceTree = "<group>"; };
 		2F2E24A7665C4E578DF76BC1 /* StartCardTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartCardTests.m; sourceTree = "<group>"; };
+		2F2E256AE2181D139C6B5F24 /* StartOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartOperation.m; sourceTree = "<group>"; };
 		2F2E25D6000C2655C3D8071E /* StartVerification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartVerification.m; sourceTree = "<group>"; };
 		2F2E25F38AEF344620997E84 /* NSNumber+Start.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+Start.h"; sourceTree = "<group>"; };
+		2F2E268562663A86A2706CB4 /* StartAPIClientOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartAPIClientOperation.h; sourceTree = "<group>"; };
 		2F2E26C2E1F286679A49A13A /* StartAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartAPIClient.m; sourceTree = "<group>"; };
 		2F2E2894D310D12A9408F797 /* NSString+Start.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Start.h"; sourceTree = "<group>"; };
 		2F2E2898CF65A88EAFDE76AE /* StartCardBrandDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartCardBrandDetector.h; sourceTree = "<group>"; };
 		2F2E28A7DBC3F422AE8A18F3 /* StartUtilsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartUtilsTests.m; sourceTree = "<group>"; };
+		2F2E294231C572FE09417FEF /* StartOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartOperation.h; sourceTree = "<group>"; };
 		2F2E2A0471C0BA3907360E27 /* StartWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartWebViewController.m; sourceTree = "<group>"; };
 		2F2E2A4D2456F02E11040650 /* StartToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartToken.h; sourceTree = "<group>"; };
 		2F2E2A7BC3BD106CC2BF9C24 /* StartVerification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartVerification.h; sourceTree = "<group>"; };
@@ -121,8 +126,8 @@
 				2F2E2B24513DB6989D9DF9A7 /* NSString+Start.m */,
 				2F2E25F38AEF344620997E84 /* NSNumber+Start.h */,
 				2F2E2EC544227404613523FC /* NSNumber+Start.m */,
-				2F2E2DA16D8B5C5C3B246508 /* UIViewController+Start.m */,
 				2F2E24970D89F38240DE99E3 /* UIViewController+Start.h */,
+				2F2E2DA16D8B5C5C3B246508 /* UIViewController+Start.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -137,6 +142,8 @@
 				2F2E200D3CE4FBD1991EB7C4 /* StartTokenRequest.m */,
 				2F2E2BD0E5571B477B610213 /* StartVerificationRequest.h */,
 				2F2E22974C55B33BA9EA50CB /* StartVerificationRequest.m */,
+				2F2E268562663A86A2706CB4 /* StartAPIClientOperation.h */,
+				2F2E2498ECC285BC1B070F93 /* StartAPIClientOperation.m */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -166,6 +173,8 @@
 				2F2E2F798B440006BBCF4445 /* StartTokenEntity.m */,
 				2F2E2A7BC3BD106CC2BF9C24 /* StartVerification.h */,
 				2F2E25D6000C2655C3D8071E /* StartVerification.m */,
+				2F2E294231C572FE09417FEF /* StartOperation.h */,
+				2F2E256AE2181D139C6B5F24 /* StartOperation.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -245,7 +254,6 @@
 				2F2E21454CB36C74A79E7DBD /* Start.h in Headers */,
 				2F2E28BF3CF96DA9D843CC30 /* StartToken.h in Headers */,
 				2F2E2CECF995EE223A541453 /* StartException.h in Headers */,
-				2F2E2DB398DE6770DFA24B28 /* UIViewController+Start.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,6 +371,8 @@
 				2F2E225AE4E2CCC4B1E76411 /* UIViewController+Start.m in Sources */,
 				2F2E21EFC0CF5B219D18C127 /* StartVerificationViewController.m in Sources */,
 				2F2E2D9EB624DA583FE422BE /* StartWebViewController.m in Sources */,
+				2F2E2B51A00FDF347EA0903E /* StartAPIClientOperation.m in Sources */,
+				2F2E296503CDD18AC5CD8032 /* StartOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

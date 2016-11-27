@@ -22,10 +22,12 @@ extern NSTimeInterval const StartAPIClientRetryAttemptsInterval;
 
 @protocol StartAPIClientRequest;
 
-typedef void (^StartAPIClientSuccessBlock)(id <StartAPIClientRequest> request);
-typedef void (^StartAPIClientErrorBlock)(id <StartAPIClientRequest> request, NSError *error);
+typedef void (^StartAPIClientSuccessBlock)();
+typedef void (^StartAPIClientErrorBlock)(NSError *error);
 
 @interface StartAPIClient : NSObject
+
+@property (nonatomic, copy, readonly) NSString *base;
 
 - (instancetype)initWithBase:(NSString *)base apiKey:(NSString *)apiKey NS_DESIGNATED_INITIALIZER;
 
