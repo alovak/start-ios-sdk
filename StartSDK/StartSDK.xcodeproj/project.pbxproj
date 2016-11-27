@@ -14,11 +14,15 @@
 		2F2E23A5940B900789B362AB /* StartAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E26C2E1F286679A49A13A /* StartAPIClient.m */; };
 		2F2E250C295F20A0E4C8BE5D /* StartTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E2CC4E93DC11CD8853F4A /* StartTests.m */; };
 		2F2E250E47FB29B26B140563 /* StartCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E20950FE54A93A28FB15B /* StartCard.m */; };
+		2F2E26612F4A48EAF19E7A83 /* StartVerificationRequestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E2F788B89D0EEA7C8433E /* StartVerificationRequestTests.m */; };
 		2F2E27E83BC0F23E5A782986 /* StartTokenRequestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E2BCA266B73D6121C7F2D /* StartTokenRequestTests.m */; };
 		2F2E28BF3CF96DA9D843CC30 /* StartToken.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F2E2A4D2456F02E11040650 /* StartToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2F2E292629C628BE4792384B /* StartCard.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F2E2BC38A6718033A58FF43 /* StartCard.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2F2E2AEA105A53BACB2C75CA /* NSString+Start.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E2B24513DB6989D9DF9A7 /* NSString+Start.m */; };
+		2F2E2C9CB30FFE3408FBB16D /* NSNumber+Start.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E2EC544227404613523FC /* NSNumber+Start.m */; };
+		2F2E2CC4146EF88A85337434 /* StartVerification.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E25D6000C2655C3D8071E /* StartVerification.m */; };
 		2F2E2CECF995EE223A541453 /* StartException.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F2E2F94B0B19915E99D4EFA /* StartException.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2F2E2D040C368521C6F0865B /* StartVerificationRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E22974C55B33BA9EA50CB /* StartVerificationRequest.m */; };
 		2F2E2D306676E18744817BB0 /* StartAPIClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E2D5044750A16AAF1CE95 /* StartAPIClientTests.m */; };
 		2F2E2D65D2CA5BFB4092B1B4 /* StartCardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E24A7665C4E578DF76BC1 /* StartCardTests.m */; };
 		2F2E2E0E6949871EBEF5B24F /* StartUtilsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E28A7DBC3F422AE8A18F3 /* StartUtilsTests.m */; };
@@ -48,21 +52,28 @@
 		2F2E2142CF40B82066D59F69 /* StartTokenRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartTokenRequest.h; sourceTree = "<group>"; };
 		2F2E21D3B3B77CD467ACE8D5 /* NSDate+Start.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Start.m"; sourceTree = "<group>"; };
 		2F2E2223F6BF1C6EE4C6544A /* StartCardBrandDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartCardBrandDetector.m; sourceTree = "<group>"; };
+		2F2E22974C55B33BA9EA50CB /* StartVerificationRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartVerificationRequest.m; sourceTree = "<group>"; };
 		2F2E2457C2FEC39CCDEAF7ED /* NSDate+Start.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Start.h"; sourceTree = "<group>"; };
 		2F2E24A7665C4E578DF76BC1 /* StartCardTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartCardTests.m; sourceTree = "<group>"; };
+		2F2E25D6000C2655C3D8071E /* StartVerification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartVerification.m; sourceTree = "<group>"; };
+		2F2E25F38AEF344620997E84 /* NSNumber+Start.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+Start.h"; sourceTree = "<group>"; };
 		2F2E26C2E1F286679A49A13A /* StartAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartAPIClient.m; sourceTree = "<group>"; };
 		2F2E2894D310D12A9408F797 /* NSString+Start.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Start.h"; sourceTree = "<group>"; };
 		2F2E2898CF65A88EAFDE76AE /* StartCardBrandDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartCardBrandDetector.h; sourceTree = "<group>"; };
 		2F2E28A7DBC3F422AE8A18F3 /* StartUtilsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartUtilsTests.m; sourceTree = "<group>"; };
 		2F2E2A4D2456F02E11040650 /* StartToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartToken.h; sourceTree = "<group>"; };
+		2F2E2A7BC3BD106CC2BF9C24 /* StartVerification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartVerification.h; sourceTree = "<group>"; };
 		2F2E2B24513DB6989D9DF9A7 /* NSString+Start.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Start.m"; sourceTree = "<group>"; };
 		2F2E2B554A1BAABA4C19CAA2 /* Start.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Start.h; sourceTree = "<group>"; };
 		2F2E2BC38A6718033A58FF43 /* StartCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartCard.h; sourceTree = "<group>"; };
 		2F2E2BCA266B73D6121C7F2D /* StartTokenRequestTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartTokenRequestTests.m; sourceTree = "<group>"; };
+		2F2E2BD0E5571B477B610213 /* StartVerificationRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartVerificationRequest.h; sourceTree = "<group>"; };
 		2F2E2CBBAFFF8D9F48EA4452 /* StartAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartAPIClient.h; sourceTree = "<group>"; };
 		2F2E2CC4E93DC11CD8853F4A /* StartTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartTests.m; sourceTree = "<group>"; };
 		2F2E2D5044750A16AAF1CE95 /* StartAPIClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartAPIClientTests.m; sourceTree = "<group>"; };
+		2F2E2EC544227404613523FC /* NSNumber+Start.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+Start.m"; sourceTree = "<group>"; };
 		2F2E2F29B41E8E1C036735DF /* StartAPIClientRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartAPIClientRequest.h; sourceTree = "<group>"; };
+		2F2E2F788B89D0EEA7C8433E /* StartVerificationRequestTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartVerificationRequestTests.m; sourceTree = "<group>"; };
 		2F2E2F798B440006BBCF4445 /* StartTokenEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartTokenEntity.m; sourceTree = "<group>"; };
 		2F2E2F94B0B19915E99D4EFA /* StartException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartException.h; sourceTree = "<group>"; };
 		831FA93B1DE983D900B6B467 /* StartSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StartSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,6 +109,8 @@
 				2F2E2457C2FEC39CCDEAF7ED /* NSDate+Start.h */,
 				2F2E2894D310D12A9408F797 /* NSString+Start.h */,
 				2F2E2B24513DB6989D9DF9A7 /* NSString+Start.m */,
+				2F2E25F38AEF344620997E84 /* NSNumber+Start.h */,
+				2F2E2EC544227404613523FC /* NSNumber+Start.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -105,11 +118,13 @@
 		2F2E22D5B3F6D0F428451378 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				2F2E200D3CE4FBD1991EB7C4 /* StartTokenRequest.m */,
-				2F2E2142CF40B82066D59F69 /* StartTokenRequest.h */,
-				2F2E26C2E1F286679A49A13A /* StartAPIClient.m */,
 				2F2E2F29B41E8E1C036735DF /* StartAPIClientRequest.h */,
 				2F2E2CBBAFFF8D9F48EA4452 /* StartAPIClient.h */,
+				2F2E26C2E1F286679A49A13A /* StartAPIClient.m */,
+				2F2E2142CF40B82066D59F69 /* StartTokenRequest.h */,
+				2F2E200D3CE4FBD1991EB7C4 /* StartTokenRequest.m */,
+				2F2E2BD0E5571B477B610213 /* StartVerificationRequest.h */,
+				2F2E22974C55B33BA9EA50CB /* StartVerificationRequest.m */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -122,6 +137,7 @@
 				2F2E24A7665C4E578DF76BC1 /* StartCardTests.m */,
 				2F2E2BCA266B73D6121C7F2D /* StartTokenRequestTests.m */,
 				2F2E2D5044750A16AAF1CE95 /* StartAPIClientTests.m */,
+				2F2E2F788B89D0EEA7C8433E /* StartVerificationRequestTests.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -129,13 +145,15 @@
 		2F2E2BD6058CF4E0F51CC3C2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				2F2E20154E9AC46AFA907F8B /* StartTokenEntity.h */,
-				2F2E2F798B440006BBCF4445 /* StartTokenEntity.m */,
-				2F2E2BC38A6718033A58FF43 /* StartCard.h */,
-				2F2E20950FE54A93A28FB15B /* StartCard.m */,
 				2F2E2B554A1BAABA4C19CAA2 /* Start.h */,
 				2F2E209290C0056BAC1F8E78 /* Start.m */,
+				2F2E2BC38A6718033A58FF43 /* StartCard.h */,
+				2F2E20950FE54A93A28FB15B /* StartCard.m */,
 				2F2E2A4D2456F02E11040650 /* StartToken.h */,
+				2F2E20154E9AC46AFA907F8B /* StartTokenEntity.h */,
+				2F2E2F798B440006BBCF4445 /* StartTokenEntity.m */,
+				2F2E2A7BC3BD106CC2BF9C24 /* StartVerification.h */,
+				2F2E25D6000C2655C3D8071E /* StartVerification.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -144,8 +162,8 @@
 			isa = PBXGroup;
 			children = (
 				2F2E2898CF65A88EAFDE76AE /* StartCardBrandDetector.h */,
-				2F2E2F94B0B19915E99D4EFA /* StartException.h */,
 				2F2E2223F6BF1C6EE4C6544A /* StartCardBrandDetector.m */,
+				2F2E2F94B0B19915E99D4EFA /* StartException.h */,
 				2F2E208A85C95EB4A3DC1024 /* StartException.m */,
 			);
 			path = Common;
@@ -314,6 +332,9 @@
 				2F2E22E1D2A8D7A4D629C5B7 /* Start.m in Sources */,
 				2F2E22ED05A95B7CF0E72FE8 /* StartCardBrandDetector.m in Sources */,
 				2F2E2E96CAAC2DA1C2512D59 /* StartException.m in Sources */,
+				2F2E2D040C368521C6F0865B /* StartVerificationRequest.m in Sources */,
+				2F2E2CC4146EF88A85337434 /* StartVerification.m in Sources */,
+				2F2E2C9CB30FFE3408FBB16D /* NSNumber+Start.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,6 +347,7 @@
 				2F2E2D65D2CA5BFB4092B1B4 /* StartCardTests.m in Sources */,
 				2F2E27E83BC0F23E5A782986 /* StartTokenRequestTests.m in Sources */,
 				2F2E2D306676E18744817BB0 /* StartAPIClientTests.m in Sources */,
+				2F2E26612F4A48EAF19E7A83 /* StartVerificationRequestTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

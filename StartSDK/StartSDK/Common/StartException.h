@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 extern NSExceptionName const StartExceptionCardFieldsInvalid;
 extern NSExceptionName const StartExceptionTokenDataInvalid;
+extern NSExceptionName const StartExceptionVerificationDataInvalid;
 
 extern NSString *const StartExceptionKeyErrors;
 

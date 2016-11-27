@@ -6,6 +6,11 @@
 //  Copyright © 2016 Payfort (http://payfort.com). All rights reserved.
 //
 
+// TODO retry on error
+// TODO header with platform and version
+
+// NOTE TLS in user guide
+
 #import <StartSDK/Start.h>
 #import <StartSDK/StartToken.h>
 #import <StartSDK/StartCard.h>

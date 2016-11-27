@@ -1,0 +1,25 @@
+//
+//  StartVerificationRequest.h
+//  StartSDK
+//
+//  Created by drif on 11/27/16.
+//  Copyright © 2016 Payfort (http://payfort.com). All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import "StartAPIClientRequest.h"
+
+NS_ASSUME_NONNULL_BEGIN
+
+@class StartTokenEntity;
+
+@interface StartVerificationRequest : NSObject <StartAPIClientRequest>
+
+- (instancetype)initWithToken:(StartTokenEntity *)token
+                       amount:(NSInteger)amount
+                     currency:(NSString *)currency
+                       method:(NSString *)method NS_DESIGNATED_INITIALIZER;
+
+@end
+
+NS_ASSUME_NONNULL_END

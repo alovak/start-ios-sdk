@@ -60,7 +60,12 @@ typedef void (^StartAPIClientTestsClientBlock)(NSURLRequest *request);
         self.onPerformURLRequest(urlRequest);
     }
     else {
-        [self handleRequest:request response:self.response data:self.data error:self.error successBlock:successBlock errorBlock:errorBlock];
+        [self handleRequest:request
+                   response:self.response
+                       data:self.data
+                      error:self.error
+               successBlock:successBlock
+                 errorBlock:errorBlock];
     }
 }
 
@@ -105,7 +110,10 @@ typedef void (^StartAPIClientTestsClientBlock)(NSURLRequest *request);
 
 #pragma mark - Private methods
 
-- (void)expect:(StartAPIClientErrorCode)errorCode whilePerforming:(StartAPIClientTestsRequest *)clientRequest on:(StartAPIClientTestsClient *)client with:(XCTestExpectation *)expectation {
+- (void)expectErrorCode:(StartAPIClientErrorCode)errorCode
+        whilePerforming:(StartAPIClientTestsRequest *)clientRequest
+                     on:(StartAPIClientTestsClient *)client
+                   with:(XCTestExpectation *)expectation {
     [client performRequest:clientRequest successBlock:^(id <StartAPIClientRequest> request) {
     } errorBlock:^(id <StartAPIClientRequest> request, NSError *error) {
         XCTAssertEqual(error.domain, StartAPIClientError, @"Expecting valid error domain");
@@ -176,21 +184,21 @@ typedef void (^StartAPIClientTestsClientBlock)(NSURLRequest *request);
 
     XCTestExpectation *serverErrorExpectation = [self expectationWithDescription:@"Waiting for server error"];
     client.response.code = 400;
-    [self expect:StartAPIClientErrorCodeServerError whilePerforming:clientRequest on:client with:serverErrorExpectation];
+    [self expectErrorCode:StartAPIClientErrorCodeServerError whilePerforming:clientRequest on:client with:serverErrorExpectation];
 
     XCTestExpectation *cantProcessErrorExpectation = [self expectationWithDescription:@"Waiting for can't process error"];
     client.response.code = 200;
     clientRequest.isForcedToFailProcess = YES;
-    [self expect:StartAPIClientErrorCodeInvalidResponse whilePerforming:clientRequest on:client with:cantProcessErrorExpectation];
+    [self expectErrorCode:StartAPIClientErrorCodeInvalidResponse whilePerforming:clientRequest on:client with:cantProcessErrorExpectation];
 
     XCTestExpectation *invalidResponseExpectation = [self expectationWithDescription:@"Waiting for invalid response error"];
     clientRequest.isForcedToFailProcess = NO;
     client.data = [NSData data];
-    [self expect:StartAPIClientErrorCodeInvalidResponse whilePerforming:clientRequest on:client with:invalidResponseExpectation];
+    [self expectErrorCode:StartAPIClientErrorCodeInvalidResponse whilePerforming:clientRequest on:client with:invalidResponseExpectation];
 
     XCTestExpectation *invalidRequestExpectation = [self expectationWithDescription:@"Waiting for invalid request error"];
-    clientRequest.data = nil;
-    [self expect:StartAPIClientErrorCodeCantFormJSON whilePerforming:clientRequest on:client with:invalidRequestExpectation];
+    clientRequest.data = [NSData data];
+    [self expectErrorCode:StartAPIClientErrorCodeCantFormJSON whilePerforming:clientRequest on:client with:invalidRequestExpectation];
 
     XCTestExpectation *customErrorExpectation = [self expectationWithDescription:@"Waiting for custom error"];
     client.error = [NSError errorWithDomain:@"Test" code:0 userInfo:nil];

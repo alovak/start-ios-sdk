@@ -10,18 +10,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSInteger, StartCardBrand) {
+    StartCardBrandUnknown,
+    StartCardBrandVisa,
+    StartCardBrandMasterCard
+};
+
 typedef NS_ENUM(NSInteger, StartCardErrorCode) {
     StartCardErrorCodeInvalidCardholder,
     StartCardErrorCodeInvalidNumber,
     StartCardErrorCodeInvalidCVC,
     StartCardErrorCodeInvalidExpirationYear,
     StartCardErrorCodeInvalidExpirationMonth
-};
-
-typedef NS_ENUM(NSInteger, StartCardBrand) {
-    StartCardBrandUnknown,
-    StartCardBrandVisa,
-    StartCardBrandMasterCard
 };
 
 extern NSErrorDomain const StartCardError;

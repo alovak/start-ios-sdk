@@ -10,6 +10,7 @@
 
 NSExceptionName const StartExceptionCardFieldsInvalid = @"StartExceptionCardFieldsInvalid";
 NSExceptionName const StartExceptionTokenDataInvalid = @"StartExceptionTokenDataInvalid";
+NSExceptionName const StartExceptionVerificationDataInvalid = @"StartExceptionVerificationDataInvalid";
 
 NSString *const StartExceptionKeyErrors = @"StartExceptionKeyErrors";
 

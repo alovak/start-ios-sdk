@@ -8,6 +8,7 @@
 
 #import "StartTokenEntity.h"
 #import "StartException.h"
+#import "NSNumber+Start.h"
 
 @implementation StartTokenEntity
 
@@ -28,7 +29,7 @@
         }
         _tokenId = dictionary[@"id"];
 
-        if (![dictionary[@"verification_required"] isKindOfClass:[NSNumber class]]) {
+        if (![dictionary[@"verification_required"] isKindOfClass:[NSNumber class]] || ![dictionary[@"verification_required"] startIsBOOL]) {
             [[StartException exceptionWithName:StartExceptionTokenDataInvalid reason:nil userInfo:nil] raise];
         }
         _isVerificationRequired = [dictionary[@"verification_required"] boolValue];

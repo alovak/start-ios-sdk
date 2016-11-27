@@ -24,7 +24,12 @@ NSErrorDomain const StartAPIClientError = @"StartAPIClientError";
                errorBlock:(StartAPIClientErrorBlock)errorBlock {
 
     NSURLSessionDataTask *dataTask = [NSURLSession.sharedSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        [self handleRequest:request response:response data:data error:error successBlock:successBlock errorBlock:errorBlock];
+        [self handleRequest:request
+                   response:response
+                       data:data
+                      error:error
+               successBlock:successBlock
+                 errorBlock:errorBlock];
     }];
     [dataTask resume];
 }
@@ -92,17 +97,22 @@ NSErrorDomain const StartAPIClientError = @"StartAPIClientError";
     [urlRequest addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [urlRequest addValue:@"application/json" forHTTPHeaderField:@"Accept"];
 
-    NSData *jsonData;
-    @try {
-        jsonData = [NSJSONSerialization dataWithJSONObject:request.params options:0 error:nil];
+    if (request.params) {
+        NSData *jsonData;
+        @try {
+            jsonData = [NSJSONSerialization dataWithJSONObject:request.params options:0 error:nil];
+        }
+        @catch (NSException *) {
+            errorBlock(request, [NSError errorWithDomain:StartAPIClientError code:StartAPIClientErrorCodeCantFormJSON userInfo:nil]);
+            return;
+        }
+        [urlRequest setHTTPBody:jsonData];
     }
-    @catch (NSException *) {
-        errorBlock(request, [NSError errorWithDomain:StartAPIClientError code:StartAPIClientErrorCodeCantFormJSON userInfo:nil]);
-        return;
-    }
-    [urlRequest setHTTPBody:jsonData];
 
-    [self performURLRequest:urlRequest request:request successBlock:successBlock errorBlock:errorBlock];
+    [self performURLRequest:urlRequest
+                    request:request
+               successBlock:successBlock
+                 errorBlock:errorBlock];
 }
 
 @end

@@ -17,13 +17,21 @@ typedef void (^StartSuccessBlock)(id <StartToken> token);
 typedef void (^StartErrorBlock)(NSError *error);
 typedef void (^StartCancelBlock)();
 
-extern NSErrorDomain const StartInternalError;
+typedef NS_ENUM(NSInteger, StartErrorCode) {
+    StartErrorCodeInternalError,
+    StartErrorCodeInvalidAmount,
+    StartErrorCodeInvalidCurrency
+};
+
+extern NSErrorDomain const StartError;
 
 @interface Start : NSObject
 
 - (instancetype)initWithAPIKey:(NSString *)apiKey NS_DESIGNATED_INITIALIZER;
 
 - (void)createTokenForCard:(StartCard *)card
+                    amount:(NSInteger)amount
+                  currency:(NSString *)currency
               successBlock:(StartSuccessBlock)successBlock
                 errorBlock:(StartErrorBlock)errorBlock
                cancelBlock:(StartCancelBlock)cancelBlock;
