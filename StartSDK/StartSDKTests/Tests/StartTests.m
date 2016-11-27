@@ -79,7 +79,7 @@
     } cancelBlock:^{
     }];
 
-    [self waitForExpectationsWithTimeout:5.0f handler:nil];
+    [self waitForExpectationsWithTimeout:15.0f handler:nil];
 }
 
 - (void)testTokenWithVerificationNotRequired {

@@ -36,6 +36,10 @@
     
     XCTAssertNil(request.params, @"Expecting correct params");
     XCTAssertEqualObjects(request.method, @"GET", @"Expecting correct method");
+    for (NSUInteger i = 0; i < 100; i++) {
+        [request registerPerforming];
+        XCTAssertTrue(request.shouldRetry, @"Expecting unlimited retry");
+    }
 }
 
 - (void)testResponse {
@@ -44,7 +48,7 @@
             @"verification_required": @YES
     }];
 
-    StartVerificationRequest *request = [[StartVerificationRequest alloc] initWithToken:token amount:1337 currency:@"BYN" method:@"POST"];
+    StartVerificationRequest *request = [[StartVerificationRequest alloc] initWithToken:token amount:1337 currency:@"BYN" method:@"GET"];
 
     NSArray *invalidResponses = @[
             @{},
@@ -65,6 +69,7 @@
     XCTAssertTrue([request processResponse:validResponse], @"Expecting successful processing");
     XCTAssertFalse([request.response isEnrolled], @"Expecting correct parsing");
     XCTAssertTrue([request.response isFinalized], @"Expecting correct parsing");
+    XCTAssertFalse(request.shouldRetry, @"Expecting stopping retry");
 }
 
 @end

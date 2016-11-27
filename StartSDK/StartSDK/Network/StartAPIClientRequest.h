@@ -15,8 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSString *method;
 @property (nonatomic, copy, readonly) NSString *path;
 @property (nonatomic, copy, readonly) NSDictionary *params;
+@property (nonatomic, assign, readonly) BOOL shouldRetry;
+@property (nonatomic, assign, readonly) NSTimeInterval retryInterval;
 @property (nonatomic, strong, readonly) id response;
 
+- (void)registerPerforming;
 - (BOOL)processResponse:(NSDictionary *)response;
 
 @end

@@ -10,12 +10,14 @@
 #import "StartTokenEntity.h"
 #import "StartVerification.h"
 #import "StartException.h"
+#import "StartAPIClient.h"
 
 @implementation StartVerificationRequest {
     NSString *_method;
     NSString *_path;
     NSDictionary *_params;
     StartVerification *_verification;
+    NSInteger _attemptsCount;
 }
 
 #pragma mark - NSObject methods
@@ -39,14 +41,31 @@
     return [_method isEqualToString:@"POST"] ? _params : nil;
 }
 
+- (BOOL)shouldRetry {
+    if ([_method isEqualToString:@"POST"]) {
+        return _attemptsCount > 0;
+    }
+    else {
+        return !_verification.isFinalized;
+    }
+}
+
+- (NSTimeInterval)retryInterval {
+    return StartAPIClientRetryAttemptsInterval;
+}
+
 - (id)response {
     return _verification;
+}
+
+- (void)registerPerforming {
+    _attemptsCount--;
 }
 
 - (BOOL)processResponse:(NSDictionary *)response {
     @try {
         _verification = [[StartVerification alloc] initWithDictionary:response];
-        return YES;
+        return ![_method isEqualToString:@"GET"] || _verification.isFinalized;
     }
     @catch (StartException *) {
         return NO;
@@ -61,6 +80,7 @@
                        method:(NSString *)method {
     self = [super init];
     if (self) {
+        _attemptsCount = StartAPIClientRetryAttemptsCount;
         _method = method.copy;
         _path = [NSString stringWithFormat:@"tokens/%@/verification", token.tokenId];
         _params = @{

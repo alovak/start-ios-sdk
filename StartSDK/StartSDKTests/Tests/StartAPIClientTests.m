@@ -75,6 +75,8 @@ typedef void (^StartAPIClientTestsClientBlock)(NSURLRequest *request);
 
 @property (nonatomic, strong) NSDictionary *response;
 @property (nonatomic, strong) NSDictionary *data;
+@property (nonatomic, assign) NSInteger attemptsExpected;
+@property (nonatomic, assign) NSInteger attemptsPerformed;
 @property (nonatomic, assign) BOOL isForcedToFailProcess;
 
 @end
@@ -93,6 +95,19 @@ typedef void (^StartAPIClientTestsClientBlock)(NSURLRequest *request);
 
 - (NSDictionary *)params {
     return self.data;
+}
+
+- (BOOL)shouldRetry {
+    return self.attemptsExpected > 0;
+}
+
+- (NSTimeInterval)retryInterval {
+    return 0.0f;
+}
+
+- (void)registerPerforming {
+    self.attemptsPerformed++;
+    self.attemptsExpected--;
 }
 
 - (BOOL)processResponse:(NSDictionary *)response {
@@ -197,7 +212,7 @@ typedef void (^StartAPIClientTestsClientBlock)(NSURLRequest *request);
     [self expectErrorCode:StartAPIClientErrorCodeInvalidResponse whilePerforming:clientRequest on:client with:invalidResponseExpectation];
 
     XCTestExpectation *invalidRequestExpectation = [self expectationWithDescription:@"Waiting for invalid request error"];
-    clientRequest.data = [NSData data];
+    clientRequest.data = @{@"window": [[UIWindow alloc] init]};
     [self expectErrorCode:StartAPIClientErrorCodeCantFormJSON whilePerforming:clientRequest on:client with:invalidRequestExpectation];
 
     XCTestExpectation *customErrorExpectation = [self expectationWithDescription:@"Waiting for custom error"];
@@ -210,6 +225,23 @@ typedef void (^StartAPIClientTestsClientBlock)(NSURLRequest *request);
     } errorBlock:^(id <StartAPIClientRequest> request, NSError *error) {
         XCTAssertEqual(error, client.error, @"Expecting valid error");
         [customErrorExpectation fulfill];
+    }];
+
+    [self waitForExpectationsWithTimeout:1.0f handler:nil];
+}
+
+- (void)testRetry {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Waiting for error"];
+
+    StartAPIClientTestsClient *client = [[StartAPIClientTestsClient alloc] initWithBase:@"http://example.com/" apiKey:@"example"];
+
+    StartAPIClientTestsRequest *clientRequest = [[StartAPIClientTestsRequest alloc] init];
+    clientRequest.attemptsExpected = 3;
+
+    [client performRequest:clientRequest successBlock:^(id <StartAPIClientRequest> request) {
+    } errorBlock:^(id <StartAPIClientRequest> request, NSError *error) {
+        XCTAssertEqual(clientRequest.attemptsPerformed, 3, @"Expecting valid amount of attempts");
+        [expectation fulfill];
     }];
 
     [self waitForExpectationsWithTimeout:1.0f handler:nil];

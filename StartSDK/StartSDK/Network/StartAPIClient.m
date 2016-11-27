@@ -10,6 +10,8 @@
 #import "StartAPIClientRequest.h"
 
 NSErrorDomain const StartAPIClientError = @"StartAPIClientError";
+NSInteger const StartAPIClientRetryAttemptsCount = 3;
+NSTimeInterval const StartAPIClientRetryAttemptsInterval = 5.0f;
 
 @implementation StartAPIClient {
     NSString *_base;
@@ -41,26 +43,38 @@ NSErrorDomain const StartAPIClientError = @"StartAPIClientError";
          successBlock:(StartAPIClientSuccessBlock)successBlock
            errorBlock:(StartAPIClientErrorBlock)errorBlock {
 
-    if (error) {
-        errorBlock(request, error);
-    }
-    else {
-        id responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-        if ([responseJSON isKindOfClass:[NSDictionary class]]) {
-            if ([response isKindOfClass:[NSHTTPURLResponse class]] && ((NSHTTPURLResponse *)response).statusCode / 100 == 2) {
-                if ([request processResponse:responseJSON]) {
-                    successBlock(request);
+    if (!error) {
+        if (data) {
+            id responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            if ([responseJSON isKindOfClass:[NSDictionary class]]) {
+                if ([response isKindOfClass:[NSHTTPURLResponse class]] && ((NSHTTPURLResponse *)response).statusCode / 100 == 2) {
+                    if ([request processResponse:responseJSON]) {
+                        successBlock(request);
+                    }
+                    else {
+                        error = [NSError errorWithDomain:StartAPIClientError code:StartAPIClientErrorCodeInvalidResponse userInfo:nil];
+                    }
                 }
                 else {
-                    errorBlock(request, [NSError errorWithDomain:StartAPIClientError code:StartAPIClientErrorCodeInvalidResponse userInfo:nil]);
-                }
+                    error = [NSError errorWithDomain:StartAPIClientError code:StartAPIClientErrorCodeServerError userInfo:nil];
+                };
             }
             else {
-                errorBlock(request, [NSError errorWithDomain:StartAPIClientError code:StartAPIClientErrorCodeServerError userInfo:nil]);
-            };
+                error = [NSError errorWithDomain:StartAPIClientError code:StartAPIClientErrorCodeInvalidResponse userInfo:nil];
+            }
         }
         else {
-            errorBlock(request, [NSError errorWithDomain:StartAPIClientError code:StartAPIClientErrorCodeInvalidResponse userInfo:nil]);
+            error = [NSError errorWithDomain:StartAPIClientError code:StartAPIClientErrorCodeInvalidResponse userInfo:nil];
+        }
+    }
+    if (error) {
+        if (request.shouldRetry) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (NSEC_PER_SEC * request.retryInterval)), dispatch_get_main_queue(), ^{
+                [self performRequest:request successBlock:successBlock errorBlock:errorBlock];
+            });
+        }
+        else {
+            errorBlock(request, error);
         }
     }
 }
@@ -108,6 +122,8 @@ NSErrorDomain const StartAPIClientError = @"StartAPIClientError";
         }
         [urlRequest setHTTPBody:jsonData];
     }
+
+    [request registerPerforming];
 
     [self performURLRequest:urlRequest
                     request:request

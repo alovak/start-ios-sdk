@@ -37,11 +37,37 @@ NSErrorDomain const StartError = @"StartError";
 
     [_apiClient performRequest:verificationRequest successBlock:^(id <StartAPIClientRequest> request) {
         if ([request.response isEnrolled]) {
-            // TODO
+            [self finalizeVerificationForToken:token
+                                        amount:amount
+                                      currency:currency
+                                  successBlock:successBlock
+                                    errorBlock:errorBlock
+                                   cancelBlock:cancelBlock];
         }
         else {
             successBlock(token);
         }
+    } errorBlock:^(id <StartAPIClientRequest> request, NSError *error) {
+        [self handleError:error errorBlock:errorBlock];
+    }];
+}
+
+- (void)finalizeVerificationForToken:(StartTokenEntity *)token
+                            amount:(NSInteger)amount
+                          currency:(NSString *)currency
+                      successBlock:(StartSuccessBlock)successBlock
+                        errorBlock:(StartErrorBlock)errorBlock
+                       cancelBlock:(StartCancelBlock)cancelBlock {
+
+    // TODO show web view
+
+    StartVerificationRequest *verificationRequest = [[StartVerificationRequest alloc] initWithToken:token
+                                                                                             amount:amount
+                                                                                           currency:currency
+                                                                                             method:@"GET"];
+
+    [_apiClient performRequest:verificationRequest successBlock:^(id <StartAPIClientRequest> request) {
+        successBlock(token);
     } errorBlock:^(id <StartAPIClientRequest> request, NSError *error) {
         [self handleError:error errorBlock:errorBlock];
     }];

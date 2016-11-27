@@ -10,10 +10,12 @@
 #import "StartCard.h"
 #import "StartTokenEntity.h"
 #import "StartException.h"
+#import "StartAPIClient.h"
 
 @implementation StartTokenRequest {
     NSDictionary *_params;
     StartTokenEntity *_token;
+    NSInteger _attemptsCount;
 }
 
 #pragma mark - NSObject methods
@@ -37,8 +39,20 @@
     return _params;
 }
 
+- (BOOL)shouldRetry {
+    return _attemptsCount > 0;
+}
+
+- (NSTimeInterval)retryInterval {
+    return StartAPIClientRetryAttemptsInterval;
+}
+
 - (id)response {
     return _token;
+}
+
+- (void)registerPerforming {
+    _attemptsCount--;
 }
 
 - (BOOL)processResponse:(NSDictionary *)response {
@@ -56,6 +70,7 @@
 - (instancetype)initWithCard:(StartCard *)card {
     self = [super init];
     if (self) {
+        _attemptsCount = StartAPIClientRetryAttemptsCount;
         _params = @{
                 @"name": card.cardholder,
                 @"number": card.number,

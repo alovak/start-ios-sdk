@@ -17,6 +17,8 @@ typedef NS_ENUM(NSInteger, StartAPIClientErrorCode) {
 };
 
 extern NSErrorDomain const StartAPIClientError;
+extern NSInteger const StartAPIClientRetryAttemptsCount;
+extern NSTimeInterval const StartAPIClientRetryAttemptsInterval;
 
 @protocol StartAPIClientRequest;
 
