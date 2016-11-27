@@ -16,6 +16,7 @@ NSTimeInterval const StartAPIClientRetryAttemptsInterval = 5.0f;
 @implementation StartAPIClient {
     NSString *_base;
     NSString *_authorization;
+    NSURLSession *_session;
 }
 
 #pragma mark - Private methods
@@ -25,7 +26,7 @@ NSTimeInterval const StartAPIClientRetryAttemptsInterval = 5.0f;
              successBlock:(StartAPIClientSuccessBlock)successBlock
                errorBlock:(StartAPIClientErrorBlock)errorBlock {
 
-    NSURLSessionDataTask *dataTask = [NSURLSession.sharedSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    NSURLSessionDataTask *dataTask = [_session dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         [self handleRequest:request
                    response:response
                        data:data
@@ -95,6 +96,10 @@ NSTimeInterval const StartAPIClientRetryAttemptsInterval = 5.0f;
 
         NSString *base64Key = [[apiKey dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0];
         _authorization = [@"Basic " stringByAppendingString:base64Key];
+
+        _session = [NSURLSession sessionWithConfiguration:NSURLSessionConfiguration.defaultSessionConfiguration
+                                                 delegate:nil
+                                            delegateQueue:NSOperationQueue.mainQueue];
     }
     return self;
 }

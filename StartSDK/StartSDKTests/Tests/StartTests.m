@@ -75,6 +75,7 @@
     } errorBlock:^(NSError *error) {
         XCTAssertEqual(error.domain, StartError, @"Expecting valid error domain");
         XCTAssertEqual(error.code, StartErrorCodeInternalError, @"Expecting valid error code");
+        XCTAssertTrue(NSThread.isMainThread, @"Expecting completion block on main thread");
         [expectation fulfill];
     } cancelBlock:^{
     }];
@@ -88,7 +89,8 @@
     Start *start = [[Start alloc] initWithAPIKey:@"test_open_k_46dd87e36d3a5949aa68"];
 
     [start createTokenForCard:self.card amount:1 currency:@"USD" successBlock:^(id <StartToken> token) {
-        XCTAssertNotNil(token.tokenId);
+        XCTAssertNotNil(token.tokenId, @"Expecting token in completion block");
+        XCTAssertTrue(NSThread.isMainThread, @"Expecting completion block on main thread");
         [expectation fulfill];
     } errorBlock:^(NSError *error) {
     } cancelBlock:^{
@@ -103,7 +105,7 @@
     Start *start = [[Start alloc] initWithAPIKey:@"live_open_k_55e06cde7fe8d3141a7e"];
 
     [start createTokenForCard:self.card amount:1 currency:@"USD" successBlock:^(id <StartToken> token) {
-        XCTAssertNotNil(token.tokenId);
+        XCTAssertNotNil(token.tokenId, @"Expecting token in completion block");
         [expectation fulfill];
     } errorBlock:^(NSError *error) {
     } cancelBlock:^{
