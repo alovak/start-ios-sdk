@@ -1,5 +1,5 @@
 //
-//  PayfortAPIClientRequest.h
+//  StartAPIClientRequest.h
 //  StartSDK
 //
 //  Created by drif on 11/26/16.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol PayfortAPIClientRequest <NSObject>
+@protocol StartAPIClientRequest <NSObject>
 
 @property (nonatomic, copy, readonly) NSString *method;
 @property (nonatomic, copy, readonly) NSString *path;

@@ -1,5 +1,5 @@
 //
-//  PayfortTokenRequestTests.m
+//  StartTokenRequestTests.m
 //  StartSDK
 //
 //  Created by drif on 11/26/16.
@@ -7,27 +7,27 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "PayfortCard.h"
-#import "PayfortTokenRequest.h"
-#import "PayfortToken.h"
-#import "PayfortTokenEntity.h"
+#import "StartCard.h"
+#import "StartTokenRequest.h"
+#import "StartToken.h"
+#import "StartTokenEntity.h"
 
-@interface PayfortTokenRequestTests : XCTestCase
+@interface StartTokenRequestTests : XCTestCase
 
 @end
 
-@implementation PayfortTokenRequestTests
+@implementation StartTokenRequestTests
 
 #pragma mark - Interface methods
 
 - (void)testParams {
-    PayfortCard *card = [[PayfortCard alloc] initWithCardholder:@"John Smith"
+    StartCard *card = [[StartCard alloc] initWithCardholder:@"John Smith"
                                                          number:@"4111111111111111"
                                                             cvc:@"123"
                                                 expirationMonth:1
                                                  expirationYear:2020];
 
-    PayfortTokenRequest *request = [[PayfortTokenRequest alloc] initWithCard:card];
+    StartTokenRequest *request = [[StartTokenRequest alloc] initWithCard:card];
 
     XCTAssertEqual(request.params[@"name"], card.cardholder, @"Expecting correct params");
     XCTAssertEqual(request.params[@"number"], card.number, @"Expecting correct params");
@@ -37,13 +37,13 @@
 }
 
 - (void)testResponse {
-    PayfortCard *card = [[PayfortCard alloc] initWithCardholder:@"John Smith"
+    StartCard *card = [[StartCard alloc] initWithCardholder:@"John Smith"
                                                          number:@"4111111111111111"
                                                             cvc:@"123"
                                                 expirationMonth:1
                                                  expirationYear:2020];
 
-    PayfortTokenRequest *request = [[PayfortTokenRequest alloc] initWithCard:card];
+    StartTokenRequest *request = [[StartTokenRequest alloc] initWithCard:card];
 
     NSArray *invalidResponses = @[
             @{},

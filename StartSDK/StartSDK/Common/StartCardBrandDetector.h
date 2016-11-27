@@ -1,5 +1,5 @@
 //
-//  PayfortCardBrandDetector.h
+//  StartCardBrandDetector.h
 //  StartSDK
 //
 //  Created by drif on 11/26/16.
@@ -8,14 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@class PayfortCard;
+@class StartCard;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PayfortCardBrandDetector : NSObject
+@interface StartCardBrandDetector : NSObject
 
 - (instancetype)initWithPrefixes:(NSArray *)prefixes lengths:(NSArray *)lengths NS_DESIGNATED_INITIALIZER;
-- (BOOL)isContainingCard:(PayfortCard *)card;
+- (BOOL)isContainingCard:(StartCard *)card;
 
 @end
 

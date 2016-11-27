@@ -1,17 +1,17 @@
 //
-//  PayfortAPIClient.m
+//  StartAPIClient.m
 //  StartSDK
 //
 //  Created by drif on 11/26/16.
 //  Copyright © 2016 Payfort (http://payfort.com). All rights reserved.
 //
 
-#import "PayfortAPIClient.h"
-#import "PayfortAPIClientRequest.h"
+#import "StartAPIClient.h"
+#import "StartAPIClientRequest.h"
 
-NSErrorDomain const PayfortAPIClientError = @"PayfortAPIClientError";
+NSErrorDomain const StartAPIClientError = @"StartAPIClientError";
 
-@implementation PayfortAPIClient {
+@implementation StartAPIClient {
     NSString *_base;
     NSString *_authorization;
 }
@@ -19,9 +19,9 @@ NSErrorDomain const PayfortAPIClientError = @"PayfortAPIClientError";
 #pragma mark - Private methods
 
 - (void)performURLRequest:(NSURLRequest *)urlRequest
-                  request:(id <PayfortAPIClientRequest>)request
-             successBlock:(PayfortAPIClientSuccessBlock)successBlock
-               errorBlock:(PayfortAPIClientErrorBlock)errorBlock {
+                  request:(id <StartAPIClientRequest>)request
+             successBlock:(StartAPIClientSuccessBlock)successBlock
+               errorBlock:(StartAPIClientErrorBlock)errorBlock {
 
     NSURLSessionDataTask *dataTask = [NSURLSession.sharedSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         [self handleRequest:request response:response data:data error:error successBlock:successBlock errorBlock:errorBlock];
@@ -29,12 +29,12 @@ NSErrorDomain const PayfortAPIClientError = @"PayfortAPIClientError";
     [dataTask resume];
 }
 
-- (void)handleRequest:(id <PayfortAPIClientRequest>)request
+- (void)handleRequest:(id <StartAPIClientRequest>)request
              response:(NSURLResponse *)response
                  data:(NSData *)data
                 error:(NSError *)error
-         successBlock:(PayfortAPIClientSuccessBlock)successBlock
-           errorBlock:(PayfortAPIClientErrorBlock)errorBlock {
+         successBlock:(StartAPIClientSuccessBlock)successBlock
+           errorBlock:(StartAPIClientErrorBlock)errorBlock {
 
     if (error) {
         errorBlock(request, error);
@@ -47,15 +47,15 @@ NSErrorDomain const PayfortAPIClientError = @"PayfortAPIClientError";
                     successBlock(request);
                 }
                 else {
-                    errorBlock(request, [NSError errorWithDomain:PayfortAPIClientError code:PayfortAPIClientErrorCodeInvalidResponse userInfo:nil]);
+                    errorBlock(request, [NSError errorWithDomain:StartAPIClientError code:StartAPIClientErrorCodeInvalidResponse userInfo:nil]);
                 }
             }
             else {
-                errorBlock(request, [NSError errorWithDomain:PayfortAPIClientError code:PayfortAPIClientErrorCodeServerError userInfo:nil]);
+                errorBlock(request, [NSError errorWithDomain:StartAPIClientError code:StartAPIClientErrorCodeServerError userInfo:nil]);
             };
         }
         else {
-            errorBlock(request, [NSError errorWithDomain:PayfortAPIClientError code:PayfortAPIClientErrorCodeInvalidResponse userInfo:nil]);
+            errorBlock(request, [NSError errorWithDomain:StartAPIClientError code:StartAPIClientErrorCodeInvalidResponse userInfo:nil]);
         }
     }
 }
@@ -80,9 +80,9 @@ NSErrorDomain const PayfortAPIClientError = @"PayfortAPIClientError";
     return self;
 }
 
-- (void)performRequest:(id <PayfortAPIClientRequest>)request
-          successBlock:(PayfortAPIClientSuccessBlock)successBlock
-            errorBlock:(PayfortAPIClientErrorBlock)errorBlock {
+- (void)performRequest:(id <StartAPIClientRequest>)request
+          successBlock:(StartAPIClientSuccessBlock)successBlock
+            errorBlock:(StartAPIClientErrorBlock)errorBlock {
 
     NSURL *url = [NSURL URLWithString:[_base stringByAppendingString:request.path]];
 
@@ -97,7 +97,7 @@ NSErrorDomain const PayfortAPIClientError = @"PayfortAPIClientError";
         jsonData = [NSJSONSerialization dataWithJSONObject:request.params options:0 error:nil];
     }
     @catch (NSException *) {
-        errorBlock(request, [NSError errorWithDomain:PayfortAPIClientError code:PayfortAPIClientErrorCodeCantFormJSON userInfo:nil]);
+        errorBlock(request, [NSError errorWithDomain:StartAPIClientError code:StartAPIClientErrorCodeCantFormJSON userInfo:nil]);
         return;
     }
     [urlRequest setHTTPBody:jsonData];

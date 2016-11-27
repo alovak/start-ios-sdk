@@ -1,5 +1,5 @@
 //
-//  PayfortAPIClientTests.m
+//  StartAPIClientTests.m
 //  StartSDK
 //
 //  Created by drif on 11/26/16.
@@ -7,29 +7,29 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "PayfortAPIClient.h"
-#import "PayfortAPIClientRequest.h"
+#import "StartAPIClient.h"
+#import "StartAPIClientRequest.h"
 
-typedef void (^CustomPayfortAPIClientBlock)(NSURLRequest *request);
+typedef void (^StartAPIClientTestsClientBlock)(NSURLRequest *request);
 
-@interface PayfortAPIClient (Test)
+@interface StartAPIClient (Test)
 
-- (void)handleRequest:(id <PayfortAPIClientRequest>)request
+- (void)handleRequest:(id <StartAPIClientRequest>)request
              response:(NSURLResponse *)response
                  data:(NSData *)data
                 error:(NSError *)error
-         successBlock:(PayfortAPIClientSuccessBlock)successBlock
-           errorBlock:(PayfortAPIClientErrorBlock)errorBlock;
+         successBlock:(StartAPIClientSuccessBlock)successBlock
+           errorBlock:(StartAPIClientErrorBlock)errorBlock;
 
 @end
 
-@interface PayfortAPIClientTestsResponse : NSHTTPURLResponse
+@interface StartAPIClientTestsResponse : NSHTTPURLResponse
 
 @property (nonatomic, assign) NSInteger code;
 
 @end
 
-@implementation PayfortAPIClientTestsResponse
+@implementation StartAPIClientTestsResponse
 
 #pragma mark - NSHTTPURLResponse methods
 
@@ -39,23 +39,23 @@ typedef void (^CustomPayfortAPIClientBlock)(NSURLRequest *request);
 
 @end
 
-@interface PayfortAPIClientTestsClient : PayfortAPIClient
+@interface StartAPIClientTestsClient : StartAPIClient
 
-@property (nonatomic, copy) CustomPayfortAPIClientBlock onPerformURLRequest;
-@property (nonatomic, strong) PayfortAPIClientTestsResponse *response;
+@property (nonatomic, copy) StartAPIClientTestsClientBlock onPerformURLRequest;
+@property (nonatomic, strong) StartAPIClientTestsResponse *response;
 @property (nonatomic, strong) NSData *data;
 @property (nonatomic, strong) NSError *error;
 
 @end
 
-@implementation PayfortAPIClientTestsClient
+@implementation StartAPIClientTestsClient
 
 #pragma mark - PayfortAPIClient methods
 
 - (void)performURLRequest:(NSURLRequest *)urlRequest
-                  request:(id <PayfortAPIClientRequest>)request
-             successBlock:(PayfortAPIClientSuccessBlock)successBlock
-               errorBlock:(PayfortAPIClientErrorBlock)errorBlock {
+                  request:(id <StartAPIClientRequest>)request
+             successBlock:(StartAPIClientSuccessBlock)successBlock
+               errorBlock:(StartAPIClientErrorBlock)errorBlock {
     if (self.onPerformURLRequest) {
         self.onPerformURLRequest(urlRequest);
     }
@@ -66,7 +66,7 @@ typedef void (^CustomPayfortAPIClientBlock)(NSURLRequest *request);
 
 @end
 
-@interface PayfortAPIClientTestsRequest : NSObject <PayfortAPIClientRequest>
+@interface StartAPIClientTestsRequest : NSObject <StartAPIClientRequest>
 
 @property (nonatomic, strong) NSDictionary *response;
 @property (nonatomic, strong) NSDictionary *data;
@@ -74,7 +74,7 @@ typedef void (^CustomPayfortAPIClientBlock)(NSURLRequest *request);
 
 @end
 
-@implementation PayfortAPIClientTestsRequest
+@implementation StartAPIClientTestsRequest
 
 #pragma mark - PayfortAPIClientRequest protocol
 
@@ -97,18 +97,18 @@ typedef void (^CustomPayfortAPIClientBlock)(NSURLRequest *request);
 
 @end
 
-@interface PayfortAPIClientTests : XCTestCase
+@interface StartAPIClientTests : XCTestCase
 
 @end
 
-@implementation PayfortAPIClientTests
+@implementation StartAPIClientTests
 
 #pragma mark - Private methods
 
-- (void)expect:(PayfortAPIClientErrorCode)errorCode whilePerforming:(PayfortAPIClientTestsRequest *)clientRequest on:(PayfortAPIClientTestsClient *)client with:(XCTestExpectation *)expectation {
-    [client performRequest:clientRequest successBlock:^(id <PayfortAPIClientRequest> request) {
-    } errorBlock:^(id <PayfortAPIClientRequest> request, NSError *error) {
-        XCTAssertEqual(error.domain, PayfortAPIClientError, @"Expecting valid error domain");
+- (void)expect:(StartAPIClientErrorCode)errorCode whilePerforming:(StartAPIClientTestsRequest *)clientRequest on:(StartAPIClientTestsClient *)client with:(XCTestExpectation *)expectation {
+    [client performRequest:clientRequest successBlock:^(id <StartAPIClientRequest> request) {
+    } errorBlock:^(id <StartAPIClientRequest> request, NSError *error) {
+        XCTAssertEqual(error.domain, StartAPIClientError, @"Expecting valid error domain");
         XCTAssertEqual(error.code, errorCode, @"Expecting valid error code");
         [expectation fulfill];
     }];
@@ -119,7 +119,7 @@ typedef void (^CustomPayfortAPIClientBlock)(NSURLRequest *request);
 - (void)testRequestForming {
     XCTestExpectation *expectation = [self expectationWithDescription:@"Waiting for forming request"];
 
-    PayfortAPIClientTestsClient *client = [[PayfortAPIClientTestsClient alloc] initWithBase:@"http://example.com/" apiKey:@"example"];
+    StartAPIClientTestsClient *client = [[StartAPIClientTestsClient alloc] initWithBase:@"http://example.com/" apiKey:@"example"];
     client.onPerformURLRequest = ^(NSURLRequest *request) {
 
         XCTAssertEqualObjects(request.allHTTPHeaderFields[@"Authorization"], @"Basic ZXhhbXBsZQ==", @"Expecting valid authorization header");
@@ -129,13 +129,13 @@ typedef void (^CustomPayfortAPIClientBlock)(NSURLRequest *request);
         [expectation fulfill];
     };
 
-    PayfortAPIClientTestsRequest *clientRequest = [[PayfortAPIClientTestsRequest alloc] init];
+    StartAPIClientTestsRequest *clientRequest = [[StartAPIClientTestsRequest alloc] init];
     clientRequest.data = @{
             @"key": @"value"
     };
 
-    [client performRequest:clientRequest successBlock:^(id <PayfortAPIClientRequest> request) {
-    } errorBlock:^(id <PayfortAPIClientRequest> request, NSError *error) {
+    [client performRequest:clientRequest successBlock:^(id <StartAPIClientRequest> request) {
+    } errorBlock:^(id <StartAPIClientRequest> request, NSError *error) {
     }];
 
     [self waitForExpectationsWithTimeout:1.0f handler:nil];
@@ -144,20 +144,20 @@ typedef void (^CustomPayfortAPIClientBlock)(NSURLRequest *request);
 - (void)testResponse {
     XCTestExpectation *expectation = [self expectationWithDescription:@"Waiting for response"];
 
-    PayfortAPIClientTestsClient *client = [[PayfortAPIClientTestsClient alloc] initWithBase:@"http://example.com/" apiKey:@"example"];
+    StartAPIClientTestsClient *client = [[StartAPIClientTestsClient alloc] initWithBase:@"http://example.com/" apiKey:@"example"];
     client.data = [@"{\"key\":\"value\"}" dataUsingEncoding:NSUTF8StringEncoding];
-    client.response = [[PayfortAPIClientTestsResponse alloc] init];
+    client.response = [[StartAPIClientTestsResponse alloc] init];
     client.response.code = 200;
 
-    PayfortAPIClientTestsRequest *clientRequest = [[PayfortAPIClientTestsRequest alloc] init];
+    StartAPIClientTestsRequest *clientRequest = [[StartAPIClientTestsRequest alloc] init];
     clientRequest.data = @{
             @"key": @"value"
     };
 
-    [client performRequest:clientRequest successBlock:^(id <PayfortAPIClientRequest> request) {
+    [client performRequest:clientRequest successBlock:^(id <StartAPIClientRequest> request) {
         XCTAssertNotNil(request.response, @"Expecting response to present");
         [expectation fulfill];
-    } errorBlock:^(id <PayfortAPIClientRequest> request, NSError *error) {
+    } errorBlock:^(id <StartAPIClientRequest> request, NSError *error) {
         NSLog(@"%@", error);
     }];
 
@@ -165,32 +165,32 @@ typedef void (^CustomPayfortAPIClientBlock)(NSURLRequest *request);
 }
 
 - (void)testErrors {
-    PayfortAPIClientTestsClient *client = [[PayfortAPIClientTestsClient alloc] initWithBase:@"http://example.com/" apiKey:@"example"];
-    client.response = [[PayfortAPIClientTestsResponse alloc] init];
+    StartAPIClientTestsClient *client = [[StartAPIClientTestsClient alloc] initWithBase:@"http://example.com/" apiKey:@"example"];
+    client.response = [[StartAPIClientTestsResponse alloc] init];
     client.data = [@"{\"key\":\"value\"}" dataUsingEncoding:NSUTF8StringEncoding];
 
-    PayfortAPIClientTestsRequest *clientRequest = [[PayfortAPIClientTestsRequest alloc] init];
+    StartAPIClientTestsRequest *clientRequest = [[StartAPIClientTestsRequest alloc] init];
     clientRequest.data = @{
             @"key": @"value"
     };
 
     XCTestExpectation *serverErrorExpectation = [self expectationWithDescription:@"Waiting for server error"];
     client.response.code = 400;
-    [self expect:PayfortAPIClientErrorCodeServerError whilePerforming:clientRequest on:client with:serverErrorExpectation];
+    [self expect:StartAPIClientErrorCodeServerError whilePerforming:clientRequest on:client with:serverErrorExpectation];
 
     XCTestExpectation *cantProcessErrorExpectation = [self expectationWithDescription:@"Waiting for can't process error"];
     client.response.code = 200;
     clientRequest.isForcedToFailProcess = YES;
-    [self expect:PayfortAPIClientErrorCodeInvalidResponse whilePerforming:clientRequest on:client with:cantProcessErrorExpectation];
+    [self expect:StartAPIClientErrorCodeInvalidResponse whilePerforming:clientRequest on:client with:cantProcessErrorExpectation];
 
     XCTestExpectation *invalidResponseExpectation = [self expectationWithDescription:@"Waiting for invalid response error"];
     clientRequest.isForcedToFailProcess = NO;
     client.data = [NSData data];
-    [self expect:PayfortAPIClientErrorCodeInvalidResponse whilePerforming:clientRequest on:client with:invalidResponseExpectation];
+    [self expect:StartAPIClientErrorCodeInvalidResponse whilePerforming:clientRequest on:client with:invalidResponseExpectation];
 
     XCTestExpectation *invalidRequestExpectation = [self expectationWithDescription:@"Waiting for invalid request error"];
     clientRequest.data = nil;
-    [self expect:PayfortAPIClientErrorCodeCantFormJSON whilePerforming:clientRequest on:client with:invalidRequestExpectation];
+    [self expect:StartAPIClientErrorCodeCantFormJSON whilePerforming:clientRequest on:client with:invalidRequestExpectation];
 
     XCTestExpectation *customErrorExpectation = [self expectationWithDescription:@"Waiting for custom error"];
     client.error = [NSError errorWithDomain:@"Test" code:0 userInfo:nil];
@@ -198,9 +198,8 @@ typedef void (^CustomPayfortAPIClientBlock)(NSURLRequest *request);
             @"key": @"value"
     };
 
-    [client performRequest:clientRequest successBlock:^(id <PayfortAPIClientRequest> request) {
-    } errorBlock:^(id <PayfortAPIClientRequest> request, NSError *error) {
-        NSLog(@"%@", error);
+    [client performRequest:clientRequest successBlock:^(id <StartAPIClientRequest> request) {
+    } errorBlock:^(id <StartAPIClientRequest> request, NSError *error) {
         XCTAssertEqual(error, client.error, @"Expecting valid error");
         [customErrorExpectation fulfill];
     }];

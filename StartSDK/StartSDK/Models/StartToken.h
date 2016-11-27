@@ -1,5 +1,5 @@
 //
-//  NSDate+Payfort.h
+//  StartToken.h
 //  StartSDK
 //
 //  Created by drif on 11/26/16.
@@ -10,10 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSDate (Payfort)
+@protocol StartToken <NSObject>
 
-- (NSInteger)payfortYear;
-- (NSInteger)payfortMonth;
+@property (nonatomic, copy, readonly) NSString *tokenId;
 
 @end
 

@@ -1,5 +1,5 @@
 //
-//  NSString+Payfort.h
+//  StartTokenRequest.h
 //  StartSDK
 //
 //  Created by drif on 11/26/16.
@@ -7,12 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "StartAPIClientRequest.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSString (Payfort)
+@class StartCard;
 
-- (NSString *)payfortStringByRemovingCharactersInSet:(NSCharacterSet *)set;
+@interface StartTokenRequest : NSObject <StartAPIClientRequest>
+
+- (instancetype)initWithCard:(StartCard *)card NS_DESIGNATED_INITIALIZER;
 
 @end
 

@@ -1,15 +1,15 @@
 //
-//  PayfortTokenEntity.m
+//  StartTokenEntity.m
 //  StartSDK
 //
 //  Created by drif on 11/26/16.
 //  Copyright © 2016 Payfort (http://payfort.com). All rights reserved.
 //
 
-#import "PayfortTokenEntity.h"
-#import "PayfortException.h"
+#import "StartTokenEntity.h"
+#import "StartException.h"
 
-@implementation PayfortTokenEntity
+@implementation StartTokenEntity
 
 #pragma mark - NSObject methods
 
@@ -24,12 +24,12 @@
     self = [super init];
     if (self) {
         if (![dictionary[@"id"] isKindOfClass:[NSString class]]) {
-            [[PayfortException exceptionWithName:PayfortExceptionTokenDataInvalid reason:nil userInfo:nil] raise];
+            [[StartException exceptionWithName:StartExceptionTokenDataInvalid reason:nil userInfo:nil] raise];
         }
         _tokenId = dictionary[@"id"];
 
         if (![dictionary[@"verification_required"] isKindOfClass:[NSNumber class]]) {
-            [[PayfortException exceptionWithName:PayfortExceptionTokenDataInvalid reason:nil userInfo:nil] raise];
+            [[StartException exceptionWithName:StartExceptionTokenDataInvalid reason:nil userInfo:nil] raise];
         }
         _isVerificationRequired = [dictionary[@"verification_required"] boolValue];
     }

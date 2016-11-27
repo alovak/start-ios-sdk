@@ -1,5 +1,5 @@
 //
-//  PayfortToken.h
+//  StartTokenEntity.h
 //  StartSDK
 //
 //  Created by drif on 11/26/16.
@@ -7,12 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "StartToken.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol PayfortToken <NSObject>
+@interface StartTokenEntity : NSObject <StartToken>
 
 @property (nonatomic, copy, readonly) NSString *tokenId;
+@property (nonatomic, assign, readonly) BOOL isVerificationRequired;
+
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary NS_DESIGNATED_INITIALIZER;
 
 @end
 

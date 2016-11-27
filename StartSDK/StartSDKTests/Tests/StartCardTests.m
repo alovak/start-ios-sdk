@@ -1,5 +1,5 @@
 //
-//  PayfortCardTests.m
+//  StartCardTests.m
 //  StartSDK
 //
 //  Created by drif on 11/26/16.
@@ -7,38 +7,38 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "PayfortCard.h"
-#import "PayfortException.h"
-#import "NSDate+Payfort.h"
+#import "StartCard.h"
+#import "StartException.h"
+#import "NSDate+Start.h"
 
-@interface PayfortCardTests : XCTestCase
+@interface StartCardTests : XCTestCase
 
 @end
 
-@implementation PayfortCardTests
+@implementation StartCardTests
 
 #pragma mark - Interface methods
 
-- (PayfortCard *)cardWithNumber:(NSString *)number {
-    return [[PayfortCard alloc] initWithCardholder:@"John Smith"
+- (StartCard *)cardWithNumber:(NSString *)number {
+    return [[StartCard alloc] initWithCardholder:@"John Smith"
                                             number:number
                                                cvc:@"123"
                                    expirationMonth:1
                                     expirationYear:2020];
 }
 
-- (void)performTestWithCardCreator:(PayfortCard *(^)(id value))cardCreator
+- (void)performTestWithCardCreator:(StartCard *(^)(id value))cardCreator
                        validValues:(NSArray *)validValues
                      invalidValues:(NSArray *)invalidValues
                        fieldToTest:(NSString *)fieldToTest
-                     errorToExpect:(PayfortCardErrorCode)errorToExpect {
+                     errorToExpect:(StartCardErrorCode)errorToExpect {
 
     @try {
         for (NSString *value in validValues) {
             cardCreator(value);
         }
     }
-    @catch (PayfortException *) {
+    @catch (StartException *) {
         XCTAssert(NO, @"Expecting successful initialization with correct %@ value", fieldToTest);
     }
 
@@ -56,10 +56,10 @@
     @try {
         block();
     }
-    @catch (PayfortException *exception) {
+    @catch (StartException *exception) {
         NSMutableSet *exceptionCodes = [NSMutableSet set];
-        [exception.userInfo[PayfortExceptionKeyErrors] enumerateObjectsUsingBlock:^(NSError *error, NSUInteger idx, BOOL *stop) {
-            if (error.domain == PayfortCardError) {
+        [exception.userInfo[StartExceptionKeyErrors] enumerateObjectsUsingBlock:^(NSError *error, NSUInteger idx, BOOL *stop) {
+            if (error.domain == StartCardError) {
                 [exceptionCodes addObject:@(error.code)];
             }
         }];
@@ -68,15 +68,15 @@
     return NO;
 }
 
-- (BOOL)gotValidationErrorWithCode:(PayfortCardErrorCode)code whenExecuting:(void (^)())block {
+- (BOOL)gotValidationErrorWithCode:(StartCardErrorCode)code whenExecuting:(void (^)())block {
     return [self gotValidationErrorsWithCodes:[NSSet setWithObject:@(code)] whenExecuting:block];
 }
 
 #pragma mark - Interface methods
 
 - (void)testCardholderValidation {
-    [self performTestWithCardCreator:^PayfortCard *(id value) {
-        return [[PayfortCard alloc] initWithCardholder:value
+    [self performTestWithCardCreator:^StartCard *(id value) {
+        return [[StartCard alloc] initWithCardholder:value
                                                 number:@"4111111111111111"
                                                    cvc:@"123"
                                        expirationMonth:1
@@ -88,12 +88,12 @@
     ] invalidValues:@[
             @"",
             @"   \t  \n  "
-    ] fieldToTest:@"cardholder" errorToExpect:PayfortCardErrorCodeInvalidCardholder];
+    ] fieldToTest:@"cardholder" errorToExpect:StartCardErrorCodeInvalidCardholder];
 }
 
 - (void)testNumberValidation {
-    [self performTestWithCardCreator:^PayfortCard *(id value) {
-        return [[PayfortCard alloc] initWithCardholder:@"John Smith"
+    [self performTestWithCardCreator:^StartCard *(id value) {
+        return [[StartCard alloc] initWithCardholder:@"John Smith"
                                                 number:value
                                                    cvc:@"123"
                                        expirationMonth:1
@@ -121,12 +121,12 @@
             @"1",
             @"a",
             @"aa111111111111111"
-    ] fieldToTest:@"number" errorToExpect:PayfortCardErrorCodeInvalidNumber];
+    ] fieldToTest:@"number" errorToExpect:StartCardErrorCodeInvalidNumber];
 }
 
 - (void)testCVCValidation {
-    [self performTestWithCardCreator:^PayfortCard *(id value) {
-        return [[PayfortCard alloc] initWithCardholder:@"John Smith"
+    [self performTestWithCardCreator:^StartCard *(id value) {
+        return [[StartCard alloc] initWithCardholder:@"John Smith"
                                                 number:@"4111111111111111"
                                                    cvc:value
                                        expirationMonth:1
@@ -140,56 +140,56 @@
             @"12",
             @"12345",
             @"abc"
-    ] fieldToTest:@"cvc" errorToExpect:PayfortCardErrorCodeInvalidCVC];
+    ] fieldToTest:@"cvc" errorToExpect:StartCardErrorCodeInvalidCVC];
 }
 
 - (void)testExpirationMonthValidation {
-    [self performTestWithCardCreator:^PayfortCard *(id value) {
-        return [[PayfortCard alloc] initWithCardholder:@"John Smith"
+    [self performTestWithCardCreator:^StartCard *(id value) {
+        return [[StartCard alloc] initWithCardholder:@"John Smith"
                                                 number:@"4111111111111111"
                                                    cvc:@"123"
                                        expirationMonth:[[value firstObject] integerValue]
                                         expirationYear:[[value lastObject] integerValue] ?: 2020];
     } validValues:@[
-            @[@([NSDate date].payfortMonth), @([NSDate date].payfortYear)],
-            @[@([NSDate date].payfortMonth + 1), @([NSDate date].payfortYear)],
-            @[@(1), @([NSDate date].payfortYear + 1)],
-            @[@(12), @([NSDate date].payfortYear + 1)]
+            @[@([NSDate date].startMonth), @([NSDate date].startYear)],
+            @[@([NSDate date].startMonth + 1), @([NSDate date].startYear)],
+            @[@(1), @([NSDate date].startYear + 1)],
+            @[@(12), @([NSDate date].startYear + 1)]
     ] invalidValues:@[
-            @[@([NSDate date].payfortMonth - 1), @([NSDate date].payfortYear)],
-            @[@(0), @([NSDate date].payfortYear + 1)],
-            @[@(13), @([NSDate date].payfortYear + 1)]
-    ] fieldToTest:@"expiration month" errorToExpect:PayfortCardErrorCodeInvalidExpirationMonth];
+            @[@([NSDate date].startMonth - 1), @([NSDate date].startYear)],
+            @[@(0), @([NSDate date].startYear + 1)],
+            @[@(13), @([NSDate date].startYear + 1)]
+    ] fieldToTest:@"expiration month" errorToExpect:StartCardErrorCodeInvalidExpirationMonth];
 }
 
 - (void)testExpirationYearValidation {
-    [self performTestWithCardCreator:^PayfortCard *(id value) {
-        return [[PayfortCard alloc] initWithCardholder:@"John Smith"
+    [self performTestWithCardCreator:^StartCard *(id value) {
+        return [[StartCard alloc] initWithCardholder:@"John Smith"
                                                 number:@"4111111111111111"
                                                    cvc:@"123"
                                        expirationMonth:[[value firstObject] integerValue] ?: 1
                                         expirationYear:[[value lastObject] integerValue]];
     } validValues:@[
-            @[@([NSDate date].payfortMonth), @([NSDate date].payfortYear)],
-            @[@([NSDate date].payfortMonth), @([NSDate date].payfortYear + 1)]
+            @[@([NSDate date].startMonth), @([NSDate date].startYear)],
+            @[@([NSDate date].startMonth), @([NSDate date].startYear + 1)]
     ] invalidValues:@[
-            @[@([NSDate date].payfortMonth), @([NSDate date].payfortYear - 1)]
-    ] fieldToTest:@"expiration year" errorToExpect:PayfortCardErrorCodeInvalidExpirationYear];
+            @[@([NSDate date].startMonth), @([NSDate date].startYear - 1)]
+    ] fieldToTest:@"expiration year" errorToExpect:StartCardErrorCodeInvalidExpirationYear];
 }
 
 - (void)testMultipleValidationErrors {
-    NSSet *codes = [NSSet setWithObjects:@(PayfortCardErrorCodeInvalidCVC), @(PayfortCardErrorCodeInvalidExpirationMonth), nil];
+    NSSet *codes = [NSSet setWithObjects:@(StartCardErrorCodeInvalidCVC), @(StartCardErrorCodeInvalidExpirationMonth), nil];
     XCTAssert([self gotValidationErrorsWithCodes:codes whenExecuting:^{
-        [[PayfortCard alloc] initWithCardholder:@"John Smith"
+        [[StartCard alloc] initWithCardholder:@"John Smith"
                                          number:@"4111111111111111"
                                             cvc:@"123456"
                                 expirationMonth:13
                                  expirationYear:2020];
     }], @"Expecting multiple validation exceptions during initialization");
 
-    codes = [NSSet setWithObjects:@(PayfortCardErrorCodeInvalidCardholder), @(PayfortCardErrorCodeInvalidNumber), @(PayfortCardErrorCodeInvalidCVC), nil];
+    codes = [NSSet setWithObjects:@(StartCardErrorCodeInvalidCardholder), @(StartCardErrorCodeInvalidNumber), @(StartCardErrorCodeInvalidCVC), nil];
     XCTAssert([self gotValidationErrorsWithCodes:codes whenExecuting:^{
-        [[PayfortCard alloc] initWithCardholder:@"  "
+        [[StartCard alloc] initWithCardholder:@"  "
                                          number:@"1234111111111111111"
                                             cvc:@"123456"
                                 expirationMonth:1
@@ -208,7 +208,7 @@
     ];
 
     for (NSString *number in visaNumbers) {
-        XCTAssertEqual([self cardWithNumber:number].brand, PayfortCardBrandVisa, @"Expecting correct Visa detecting");
+        XCTAssertEqual([self cardWithNumber:number].brand, StartCardBrandVisa, @"Expecting correct Visa detecting");
     }
 
     NSArray *masterCardNumbers = @[
@@ -227,7 +227,7 @@
     ];
 
     for (NSString *number in masterCardNumbers) {
-        XCTAssertEqual([self cardWithNumber:number].brand, PayfortCardBrandMasterCard, @"Expecting correct MasterCard detecting");
+        XCTAssertEqual([self cardWithNumber:number].brand, StartCardBrandMasterCard, @"Expecting correct MasterCard detecting");
     }
 
     NSArray *unknownNumbers = @[
@@ -242,7 +242,7 @@
     ];
 
     for (NSString *number in unknownNumbers) {
-        XCTAssertEqual([self cardWithNumber:number].brand, PayfortCardBrandUnknown, @"Expecting correct unknown brands detecting");
+        XCTAssertEqual([self cardWithNumber:number].brand, StartCardBrandUnknown, @"Expecting correct unknown brands detecting");
     }
 }
 

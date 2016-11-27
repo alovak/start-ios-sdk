@@ -1,5 +1,5 @@
 //
-//  PayfortCard.h
+//  StartCard.h
 //  StartSDK
 //
 //  Created by drif on 11/26/16.
@@ -10,23 +10,23 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSInteger, PayfortCardErrorCode) {
-    PayfortCardErrorCodeInvalidCardholder,
-    PayfortCardErrorCodeInvalidNumber,
-    PayfortCardErrorCodeInvalidCVC,
-    PayfortCardErrorCodeInvalidExpirationYear,
-    PayfortCardErrorCodeInvalidExpirationMonth
+typedef NS_ENUM(NSInteger, StartCardErrorCode) {
+    StartCardErrorCodeInvalidCardholder,
+    StartCardErrorCodeInvalidNumber,
+    StartCardErrorCodeInvalidCVC,
+    StartCardErrorCodeInvalidExpirationYear,
+    StartCardErrorCodeInvalidExpirationMonth
 };
 
-typedef NS_ENUM(NSInteger, PayfortCardBrand) {
-    PayfortCardBrandUnknown,
-    PayfortCardBrandVisa,
-    PayfortCardBrandMasterCard
+typedef NS_ENUM(NSInteger, StartCardBrand) {
+    StartCardBrandUnknown,
+    StartCardBrandVisa,
+    StartCardBrandMasterCard
 };
 
-extern NSErrorDomain const PayfortCardError;
+extern NSErrorDomain const StartCardError;
 
-@interface PayfortCard : NSObject
+@interface StartCard : NSObject
 
 @property (nonatomic, copy, readonly) NSString *cardholder;
 @property (nonatomic, copy, readonly) NSString *number;
@@ -34,7 +34,7 @@ extern NSErrorDomain const PayfortCardError;
 @property (nonatomic, assign, readonly) NSInteger expirationMonth;
 @property (nonatomic, assign, readonly) NSInteger expirationYear;
 
-@property (nonatomic, assign, readonly) PayfortCardBrand brand;
+@property (nonatomic, assign, readonly) StartCardBrand brand;
 @property (nonatomic, copy, readonly) NSString *lastDigits;
 @property (nonatomic, copy, readonly) NSString *bin;
 

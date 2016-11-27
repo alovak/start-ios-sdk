@@ -1,15 +1,15 @@
 //
-//  PayfortCardBrandDetector.m
+//  StartCardBrandDetector.m
 //  StartSDK
 //
 //  Created by drif on 11/26/16.
 //  Copyright © 2016 Payfort (http://payfort.com). All rights reserved.
 //
 
-#import "PayfortCardBrandDetector.h"
-#import "PayfortCard.h"
+#import "StartCardBrandDetector.h"
+#import "StartCard.h"
 
-@implementation PayfortCardBrandDetector {
+@implementation StartCardBrandDetector {
     NSArray *_prefixes;
     NSArray *_lengths;
 }
@@ -32,7 +32,7 @@
     return self;
 }
 
-- (BOOL)isContainingCard:(PayfortCard *)card {
+- (BOOL)isContainingCard:(StartCard *)card {
 
     if (![_lengths containsObject:@(card.number.length)]) {
         return NO;

@@ -1,24 +1,24 @@
 //
-//  PayfortCard.m
+//  StartCard.m
 //  StartSDK
 //
 //  Created by drif on 11/26/16.
 //  Copyright © 2016 Payfort (http://payfort.com). All rights reserved.
 //
 
-#import "PayfortCard.h"
-#import "NSString+Payfort.h"
-#import "NSDate+Payfort.h"
-#import "PayfortException.h"
-#import "PayfortCardBrandDetector.h"
+#import "StartCard.h"
+#import "NSString+Start.h"
+#import "NSDate+Start.h"
+#import "StartException.h"
+#import "StartCardBrandDetector.h"
 
-NSErrorDomain const PayfortCardError = @"PayfortCardError";
+NSErrorDomain const StartCardError = @"StartCardError";
 
-@interface PayfortCard ()
+@interface StartCard ()
 
 @end
 
-@implementation PayfortCard
+@implementation StartCard
 
 #pragma mark - Private methods
 
@@ -26,24 +26,24 @@ NSErrorDomain const PayfortCardError = @"PayfortCardError";
     NSMutableSet *errors = [NSMutableSet set];
 
     if (!self.isCardholderValid) {
-        [errors addObject:[NSError errorWithDomain:PayfortCardError code:PayfortCardErrorCodeInvalidCardholder userInfo:nil]];
+        [errors addObject:[NSError errorWithDomain:StartCardError code:StartCardErrorCodeInvalidCardholder userInfo:nil]];
     }
     if (!self.isNumberValid) {
-        [errors addObject:[NSError errorWithDomain:PayfortCardError code:PayfortCardErrorCodeInvalidNumber userInfo:nil]];
+        [errors addObject:[NSError errorWithDomain:StartCardError code:StartCardErrorCodeInvalidNumber userInfo:nil]];
     }
     if (!self.isCVCValid) {
-        [errors addObject:[NSError errorWithDomain:PayfortCardError code:PayfortCardErrorCodeInvalidCVC userInfo:nil]];
+        [errors addObject:[NSError errorWithDomain:StartCardError code:StartCardErrorCodeInvalidCVC userInfo:nil]];
     }
     if (!self.isExpirationMonthValid) {
-        [errors addObject:[NSError errorWithDomain:PayfortCardError code:PayfortCardErrorCodeInvalidExpirationMonth userInfo:nil]];
+        [errors addObject:[NSError errorWithDomain:StartCardError code:StartCardErrorCodeInvalidExpirationMonth userInfo:nil]];
     }
     if (!self.isExpirationYearValid) {
-        [errors addObject:[NSError errorWithDomain:PayfortCardError code:PayfortCardErrorCodeInvalidExpirationYear userInfo:nil]];
+        [errors addObject:[NSError errorWithDomain:StartCardError code:StartCardErrorCodeInvalidExpirationYear userInfo:nil]];
     }
 
     if (errors.count) {
-        [[PayfortException exceptionWithName:PayfortExceptionCardFieldsInvalid reason:nil userInfo:@{
-                PayfortExceptionKeyErrors: errors
+        [[StartException exceptionWithName:StartExceptionCardFieldsInvalid reason:nil userInfo:@{
+                StartExceptionKeyErrors: errors
         }] raise];
     }
 }
@@ -61,12 +61,12 @@ NSErrorDomain const PayfortCardError = @"PayfortCardError";
 }
 
 - (BOOL)isExpirationMonthValid {
-    NSInteger lowBound = (_expirationYear == [NSDate date].payfortYear) ? [NSDate date].payfortMonth : 1;
+    NSInteger lowBound = (_expirationYear == [NSDate date].startYear) ? [NSDate date].startMonth : 1;
     return _expirationMonth >= lowBound && _expirationMonth <= 12;
 }
 
 - (BOOL)isExpirationYearValid {
-    return _expirationYear >= [NSDate date].payfortYear && _expirationYear <= 2100;
+    return _expirationYear >= [NSDate date].startYear && _expirationYear <= 2100;
 }
 
 - (BOOL)isSatisfyingLuhn {
@@ -87,8 +87,8 @@ NSErrorDomain const PayfortCardError = @"PayfortCardError";
 
     dispatch_once(&token, ^{
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        dict[@(PayfortCardBrandVisa)] = [[PayfortCardBrandDetector alloc] initWithPrefixes:@[@"4"] lengths:@[@13, @16]];
-        dict[@(PayfortCardBrandMasterCard)] = [[PayfortCardBrandDetector alloc] initWithPrefixes:@[
+        dict[@(StartCardBrandVisa)] = [[StartCardBrandDetector alloc] initWithPrefixes:@[@"4"] lengths:@[@13, @16]];
+        dict[@(StartCardBrandMasterCard)] = [[StartCardBrandDetector alloc] initWithPrefixes:@[
                 @"23", @"24", @"25", @"26",
                 @"50", @"51", @"52", @"53", @"54", @"55",
                 @"223", @"224", @"225", @"226", @"227", @"228", @"229",
@@ -100,7 +100,7 @@ NSErrorDomain const PayfortCardError = @"PayfortCardError";
 
     for (NSNumber *brand in brands) {
         if ([brands[brand] isContainingCard:self]) {
-            _brand = (PayfortCardBrand) brand.integerValue;
+            _brand = (StartCardBrand) brand.integerValue;
             break;
         }
     }
@@ -124,8 +124,8 @@ NSErrorDomain const PayfortCardError = @"PayfortCardError";
     self = [super init];
     if (self) {
         _cardholder = [cardholder stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        _number = [number payfortStringByRemovingCharactersInSet:[NSCharacterSet decimalDigitCharacterSet].invertedSet];
-        _cvc = [cvc payfortStringByRemovingCharactersInSet:[NSCharacterSet decimalDigitCharacterSet].invertedSet];
+        _number = [number startStringByRemovingCharactersInSet:[NSCharacterSet decimalDigitCharacterSet].invertedSet];
+        _cvc = [cvc startStringByRemovingCharactersInSet:[NSCharacterSet decimalDigitCharacterSet].invertedSet];
         _expirationMonth = expirationMonth;
         _expirationYear = expirationYear;
 
