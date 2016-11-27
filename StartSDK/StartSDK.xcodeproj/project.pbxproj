@@ -69,7 +69,7 @@
 		831FA93E1DE983D900B6B467 /* StartSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StartSDK.h; sourceTree = "<group>"; };
 		831FA93F1DE983D900B6B467 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		831FA9441DE983D900B6B467 /* StartSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StartSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		831FA94B1DE983D900B6B467 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = StartSDKTests/Info.plist; sourceTree = "<group>"; };
+		831FA94B1DE983D900B6B467 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,7 +156,6 @@
 			children = (
 				831FA93D1DE983D900B6B467 /* StartSDK */,
 				831FA9481DE983D900B6B467 /* StartSDKTests */,
-				831FA94B1DE983D900B6B467 /* Info.plist */,
 				831FA93C1DE983D900B6B467 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -187,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				2F2E25C3D28209DE5E5FC00E /* Tests */,
+				831FA94B1DE983D900B6B467 /* Info.plist */,
 			);
 			path = StartSDKTests;
 			sourceTree = "<group>";
