@@ -11,7 +11,7 @@
 
 NSErrorDomain const StartAPIClientError = @"StartAPIClientError";
 NSInteger const StartAPIClientRetryAttemptsCount = 3;
-NSTimeInterval const StartAPIClientRetryAttemptsInterval = 5.0f;
+NSTimeInterval const StartAPIClientRetryAttemptsInterval = 5.0;
 
 @implementation StartAPIClient {
     NSString *_base;
@@ -46,7 +46,7 @@ NSTimeInterval const StartAPIClientRetryAttemptsInterval = 5.0f;
 
     if (!error) {
         if (data) {
-            id responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            id responseJSON = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingOptions) 0 error:nil];
             if ([responseJSON isKindOfClass:[NSDictionary class]]) {
                 if ([response isKindOfClass:[NSHTTPURLResponse class]] && ((NSHTTPURLResponse *)response).statusCode / 100 == 2) {
                     if ([request processResponse:responseJSON]) {
@@ -71,7 +71,9 @@ NSTimeInterval const StartAPIClientRetryAttemptsInterval = 5.0f;
     if (error) {
         if (request.shouldRetry) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (NSEC_PER_SEC * request.retryInterval)), dispatch_get_main_queue(), ^{
-                [self performRequest:request successBlock:successBlock errorBlock:errorBlock];
+                if (request.shouldRetry) {
+                    [self performRequest:request successBlock:successBlock errorBlock:errorBlock];
+                }
             });
         }
         else {
@@ -94,7 +96,7 @@ NSTimeInterval const StartAPIClientRetryAttemptsInterval = 5.0f;
     if (self) {
         _base = base.copy;
 
-        NSString *base64Key = [[apiKey dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0];
+        NSString *base64Key = [[apiKey dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:(NSDataBase64EncodingOptions) 0];
         _authorization = [@"Basic " stringByAppendingString:base64Key];
 
         _session = [NSURLSession sessionWithConfiguration:NSURLSessionConfiguration.defaultSessionConfiguration
@@ -116,10 +118,10 @@ NSTimeInterval const StartAPIClientRetryAttemptsInterval = 5.0f;
     [urlRequest addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [urlRequest addValue:@"application/json" forHTTPHeaderField:@"Accept"];
 
-    if (request.params) {
+    if (![request.method isEqualToString:@"GET"] && request.params) {
         NSData *jsonData;
         @try {
-            jsonData = [NSJSONSerialization dataWithJSONObject:request.params options:0 error:nil];
+            jsonData = [NSJSONSerialization dataWithJSONObject:request.params options:(NSJSONWritingOptions) 0 error:nil];
         }
         @catch (NSException *) {
             errorBlock(request, [NSError errorWithDomain:StartAPIClientError code:StartAPIClientErrorCodeCantFormJSON userInfo:nil]);

@@ -6,7 +6,7 @@
 //  Copyright © 2016 Payfort (http://payfort.com). All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 @class StartCard;
 

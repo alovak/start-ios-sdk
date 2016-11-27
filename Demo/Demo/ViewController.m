@@ -6,10 +6,8 @@
 //  Copyright © 2016 Payfort (http://payfort.com). All rights reserved.
 //
 
-#import <StartSDK/StartCard.h>
-#import <StartSDK/StartException.h>
-#import <StartSDK/Start.h>
-#import <StartSDK/StartToken.h>
+@import StartSDK;
+
 #import "ViewController.h"
 
 @interface ViewController ()
@@ -46,11 +44,11 @@
     NSString *errorText = nil;
 
     @try {
-        card = [[StartCard alloc] initWithCardholder:self.cardholderTextField.text
-                                                         number:self.numberTextField.text
-                                                            cvc:self.cvcTextField.text
-                                                expirationMonth:self.monthTextField.text.integerValue
-                                                 expirationYear:self.yearTextField.text.integerValue];
+        card = [[StartCard alloc] initWithCardholder:(NSString *_Nonnull) self.cardholderTextField.text
+                                              number:(NSString *_Nonnull) self.numberTextField.text
+                                                 cvc:(NSString *_Nonnull) self.cvcTextField.text
+                                     expirationMonth:self.monthTextField.text.integerValue
+                                      expirationYear:self.yearTextField.text.integerValue];
     }
     @catch (StartException *exception) {
         NSDictionary *fields = @{
@@ -89,6 +87,7 @@
         [self showAlertWithText:[NSString stringWithFormat:@"Error occurred:\n%@", error]];
         [self.activityIndicatorView stopAnimating];
     } cancelBlock:^{
+        [self showAlertWithText:@"Cancelled"];
         [self.activityIndicatorView stopAnimating];
     }];
 }

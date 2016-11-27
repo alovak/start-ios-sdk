@@ -11,6 +11,30 @@
 #import "StartCard.h"
 #import "StartToken.h"
 #import "NSDate+Start.h"
+#import "StartTokenEntity.h"
+
+typedef void (^StartTestsBlock)();
+
+@interface StartTestsStart : Start
+
+@property (nonatomic, copy) StartTestsBlock onFinalize;
+
+@end
+
+@implementation StartTestsStart
+
+#pragma mark - Start methods
+
+- (void)finalizeVerificationForToken:(StartTokenEntity *)token
+                              amount:(NSInteger)amount
+                            currency:(NSString *)currency
+                        successBlock:(StartSuccessBlock)successBlock
+                          errorBlock:(StartErrorBlock)errorBlock
+                         cancelBlock:(StartCancelBlock)cancelBlock {
+    self.onFinalize();
+}
+
+@end
 
 @interface StartTests : XCTestCase
 
@@ -21,8 +45,12 @@
 #pragma mark - Private methods
 
 - (StartCard *)card {
+    return [self cardWithNumber:@"4242424242424242"];
+}
+
+- (StartCard *)cardWithNumber:(NSString *)number {
     return [[StartCard alloc] initWithCardholder:@"Abdullah Mohammed"
-                                          number:@"4242424242424242"
+                                          number:number
                                              cvc:@"123"
                                  expirationMonth:[NSDate date].startMonth
                                   expirationYear:[NSDate date].startYear];
@@ -107,6 +135,22 @@
     [start createTokenForCard:self.card amount:1 currency:@"USD" successBlock:^(id <StartToken> token) {
         XCTAssertNotNil(token.tokenId, @"Expecting token in completion block");
         [expectation fulfill];
+    } errorBlock:^(NSError *error) {
+    } cancelBlock:^{
+    }];
+
+    [self waitForExpectationsWithTimeout:10.0f handler:nil];
+}
+
+- (void)testTokenWithVerificationRequiredEnrolled {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Waiting for finalization"];
+
+    StartTestsStart *start = [[StartTestsStart alloc] initWithAPIKey:@"live_open_k_55e06cde7fe8d3141a7e"];
+    start.onFinalize = ^{
+        [expectation fulfill];
+    };
+
+    [start createTokenForCard:[self cardWithNumber:@"5453010000064154"] amount:1 currency:@"USD" successBlock:^(id <StartToken> token) {
     } errorBlock:^(NSError *error) {
     } cancelBlock:^{
     }];

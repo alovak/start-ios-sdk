@@ -34,7 +34,7 @@
     
     request = [[StartVerificationRequest alloc] initWithToken:token amount:1337 currency:@"BYN" method:@"GET"];
     
-    XCTAssertNil(request.params, @"Expecting correct params");
+    XCTAssertEqual(request.params.count, 0, @"Expecting correct params");
     XCTAssertEqualObjects(request.method, @"GET", @"Expecting correct method");
     for (NSUInteger i = 0; i < 100; i++) {
         [request registerPerforming];

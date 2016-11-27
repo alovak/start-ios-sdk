@@ -71,7 +71,7 @@ NSErrorDomain const StartCardError = @"StartCardError";
 
 - (BOOL)isSatisfyingLuhn {
     NSInteger sum = 0;
-    for (NSInteger i = 0; i < _number.length; i++) {
+    for (NSUInteger i = 0; i < _number.length; i++) {
         NSInteger digit = [[_number substringWithRange:NSMakeRange(_number.length - i - 1, 1)] integerValue];
         if (i % 2 == 1) {
             digit *= 2;

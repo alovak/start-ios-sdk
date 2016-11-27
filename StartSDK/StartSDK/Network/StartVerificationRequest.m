@@ -18,6 +18,7 @@
     NSDictionary *_params;
     StartVerification *_verification;
     NSInteger _attemptsCount;
+    BOOL _isCancelled;
 }
 
 #pragma mark - NSObject methods
@@ -38,7 +39,7 @@
 }
 
 - (NSDictionary *)params {
-    return [_method isEqualToString:@"POST"] ? _params : nil;
+    return [_method isEqualToString:@"POST"] ? _params : @{};
 }
 
 - (BOOL)shouldRetry {
@@ -46,7 +47,7 @@
         return _attemptsCount > 0;
     }
     else {
-        return !_verification.isFinalized;
+        return !_isCancelled && !_verification.isFinalized;
     }
 }
 
@@ -89,6 +90,10 @@
         };
     }
     return self;
+}
+
+- (void)cancel {
+    _isCancelled = YES;
 }
 
 @end

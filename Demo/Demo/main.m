@@ -6,7 +6,8 @@
 //  Copyright © 2016 Payfort (http://payfort.com). All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
+
 #import "AppDelegate.h"
 
 int main(int argc, char * argv[]) {

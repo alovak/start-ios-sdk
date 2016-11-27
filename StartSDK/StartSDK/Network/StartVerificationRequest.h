@@ -6,7 +6,8 @@
 //  Copyright © 2016 Payfort (http://payfort.com). All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
+
 #import "StartAPIClientRequest.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -19,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
                        amount:(NSInteger)amount
                      currency:(NSString *)currency
                        method:(NSString *)method NS_DESIGNATED_INITIALIZER;
+
+- (void)cancel;
 
 @end
 

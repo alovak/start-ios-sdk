@@ -9,6 +9,9 @@
 // TODO header with platform and version
 // TODO better errors (include raw body at least)
 // TODO do not retry on specific errors (etc. invalid token)
+// TODO refactor start
+// TODO refactor client
+// TODO unit test for cancelling
 // NOTE TLS in user guide
 
 #import <StartSDK/Start.h>

@@ -180,20 +180,20 @@
 - (void)testMultipleValidationErrors {
     NSSet *codes = [NSSet setWithObjects:@(StartCardErrorCodeInvalidCVC), @(StartCardErrorCodeInvalidExpirationMonth), nil];
     XCTAssert([self gotValidationErrorsWithCodes:codes whenExecuting:^{
-        [[StartCard alloc] initWithCardholder:@"John Smith"
-                                         number:@"4111111111111111"
-                                            cvc:@"123456"
-                                expirationMonth:13
-                                 expirationYear:2020];
+        __unused StartCard *card = [[StartCard alloc] initWithCardholder:@"John Smith"
+                                                                  number:@"4111111111111111"
+                                                                     cvc:@"123456"
+                                                         expirationMonth:13
+                                                          expirationYear:2020];
     }], @"Expecting multiple validation exceptions during initialization");
 
     codes = [NSSet setWithObjects:@(StartCardErrorCodeInvalidCardholder), @(StartCardErrorCodeInvalidNumber), @(StartCardErrorCodeInvalidCVC), nil];
     XCTAssert([self gotValidationErrorsWithCodes:codes whenExecuting:^{
-        [[StartCard alloc] initWithCardholder:@"  "
-                                         number:@"1234111111111111111"
-                                            cvc:@"123456"
-                                expirationMonth:1
-                                 expirationYear:2020];
+        __unused StartCard *card = [[StartCard alloc] initWithCardholder:@"  "
+                                                                  number:@"1234111111111111111"
+                                                                     cvc:@"123456"
+                                                         expirationMonth:1
+                                                          expirationYear:2020];
     }], @"Expecting multiple validation exceptions during initialization");
 }
 

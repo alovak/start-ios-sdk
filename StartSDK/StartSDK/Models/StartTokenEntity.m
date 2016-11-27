@@ -27,7 +27,7 @@
         if (![dictionary[@"id"] isKindOfClass:[NSString class]]) {
             [[StartException exceptionWithName:StartExceptionTokenDataInvalid reason:nil userInfo:nil] raise];
         }
-        _tokenId = dictionary[@"id"];
+        _tokenId = (NSString *) dictionary[@"id"];
 
         if (![dictionary[@"verification_required"] isKindOfClass:[NSNumber class]] || ![dictionary[@"verification_required"] startIsBOOL]) {
             [[StartException exceptionWithName:StartExceptionTokenDataInvalid reason:nil userInfo:nil] raise];
