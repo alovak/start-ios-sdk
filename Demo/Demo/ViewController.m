@@ -3,7 +3,7 @@
 //  Demo
 //
 //  Created by drif on 11/27/16.
-//  Copyright © 2016 Payfort (http://payfort.com). All rights reserved.
+//  Copyright © 2016 Payfort (https://start.payfort.com). All rights reserved.
 //
 
 @import StartSDK;
@@ -44,11 +44,13 @@
     NSString *errorText = nil;
 
     @try {
+        NSString *expirationYearString = [@"20" stringByAppendingString:(NSString *_Nonnull) self.yearTextField.text];
+
         card = [[StartCard alloc] initWithCardholder:(NSString *_Nonnull) self.cardholderTextField.text
                                               number:(NSString *_Nonnull) self.numberTextField.text
                                                  cvc:(NSString *_Nonnull) self.cvcTextField.text
                                      expirationMonth:self.monthTextField.text.integerValue
-                                      expirationYear:self.yearTextField.text.integerValue];
+                                      expirationYear:expirationYearString.integerValue];
     }
     @catch (StartException *exception) {
         NSDictionary *fields = @{

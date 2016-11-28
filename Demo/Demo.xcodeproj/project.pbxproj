@@ -13,6 +13,7 @@
 		831FA9871DEB079900B6B467 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 831FA9851DEB079900B6B467 /* LaunchScreen.storyboard */; };
 		831FA9881DEB079900B6B467 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 831FA9861DEB079900B6B467 /* Main.storyboard */; };
 		831FA98F1DEB1AEA00B6B467 /* StartSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 831FA98A1DEB1AA900B6B467 /* StartSDK.framework */; };
+		8350F2CC1DECDAC700C65FE0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8350F2CB1DECDAC700C65FE0 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,6 +40,7 @@
 		831FA9851DEB079900B6B467 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		831FA9861DEB079900B6B467 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		831FA98A1DEB1AA900B6B467 /* StartSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StartSDK.framework; path = "../../../../Library/Developer/Xcode/DerivedData/PayfortStart-duahkxnbkrhngjcesqwyxnbsqcvt/Build/Products/Debug-iphonesimulator/StartSDK.framework"; sourceTree = "<group>"; };
+		8350F2CB1DECDAC700C65FE0 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 		831FA9841DEB079900B6B467 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8350F2CB1DECDAC700C65FE0 /* Localizable.strings */,
 				831FA9851DEB079900B6B467 /* LaunchScreen.storyboard */,
 				831FA9861DEB079900B6B467 /* Main.storyboard */,
 			);
@@ -137,7 +140,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0810;
-				ORGANIZATIONNAME = "Payfort (http://payfort.com)";
+				ORGANIZATIONNAME = "Payfort (https://start.payfort.com)";
 				TargetAttributes = {
 					831FA9681DEB069800B6B467 = {
 						CreatedOnToolsVersion = 8.1;
@@ -165,6 +168,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				831FA9871DEB079900B6B467 /* LaunchScreen.storyboard in Resources */,
+				8350F2CC1DECDAC700C65FE0 /* Localizable.strings in Resources */,
 				831FA9881DEB079900B6B467 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

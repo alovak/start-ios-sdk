@@ -1,0 +1,10 @@
+/* 
+  Localizable.strings
+  Demo
+
+  Created by drif on 11/29/16.
+  Copyright © 2016 Payfort (https://start.payfort.com). All rights reserved.
+*/
+
+"payfort_start_verification_message" = "3D Secure verification will start in a bit";
+"payfort_start_verification_button" = "Got it";

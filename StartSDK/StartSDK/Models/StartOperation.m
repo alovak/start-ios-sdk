@@ -3,7 +3,7 @@
 //  StartSDK
 //
 //  Created by drif on 11/27/16.
-//  Copyright © 2016 Payfort (http://payfort.com). All rights reserved.
+//  Copyright © 2016 Payfort (https://start.payfort.com). All rights reserved.
 //
 
 #import "StartOperation.h"
@@ -28,6 +28,8 @@
     StartCancelBlock _cancelBlock;
 
     StartTokenEntity *_token;
+
+    __weak UIViewController *_rootViewController;
 }
 
 #pragma mark - Private methods
@@ -67,7 +69,7 @@
 
     [_apiClient performRequest:verificationRequest successBlock:^{
         if ([verificationRequest.response isEnrolled]) {
-            [self finalizeVerification];
+            [self showVerificationAlert];
         }
         else {
             self->_successBlock(self->_token);
@@ -77,19 +79,38 @@
     }];
 }
 
+- (void)showVerificationAlert {
+    _rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController.topPresentedViewController;
+
+    NSString *message = NSLocalizedString(StartLocalizationKeyVerificationMessage, nil);
+    if ([message isEqualToString:StartLocalizationKeyVerificationMessage]) {
+        message = @"Card verification process is required by your bank (3D Secure). It will start in a bit.";
+    }
+
+    NSString *buttonTitle = NSLocalizedString(StartLocalizationKeyVerificationButton, nil);
+    if ([buttonTitle isEqualToString:StartLocalizationKeyVerificationButton]) {
+        buttonTitle = @"OK";
+    }
+
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:buttonTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self finalizeVerification];
+    }]];
+    [_rootViewController presentViewController:alertController animated:YES completion:nil];
+}
+
 - (void)finalizeVerification {
     StartVerificationRequest *verificationRequest = [self verificationRequestWithMethod:@"GET"];
 
-    UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController.topPresentedViewController;
     StartVerificationViewController *verificationViewController = [self verificationViewControllerWithCancelBlock:^{
-        [rootViewController dismissViewControllerAnimated:YES completion:nil];
+        [self->_rootViewController dismissViewControllerAnimated:YES completion:nil];
         [verificationRequest cancel];
         self->_cancelBlock();
     }];
-    [rootViewController presentViewController:verificationViewController animated:YES completion:nil];
+    [_rootViewController presentViewController:verificationViewController animated:YES completion:nil];
 
     [_apiClient performRequest:verificationRequest successBlock:^{
-        [rootViewController dismissViewControllerAnimated:YES completion:nil];
+        [self->_rootViewController dismissViewControllerAnimated:YES completion:nil];
         self->_successBlock(self->_token);
     } errorBlock:^(NSError *error) {
         [self handleError:error];

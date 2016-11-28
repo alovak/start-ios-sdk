@@ -3,12 +3,15 @@
 //  StartSDK
 //
 //  Created by drif on 11/26/16.
-//  Copyright © 2016 Payfort (http://payfort.com). All rights reserved.
+//  Copyright © 2016 Payfort (https://start.payfort.com). All rights reserved.
 //
 
 @import Foundation;
 
 NS_ASSUME_NONNULL_BEGIN
+
+#define StartLocalizationKeyVerificationMessage @"payfort_start_verification_message"
+#define StartLocalizationKeyVerificationButton @"payfort_start_verification_button"
 
 @protocol StartToken;
 @class StartCard;

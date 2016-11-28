@@ -309,7 +309,7 @@
 			attributes = {
 				CLASSPREFIX = Start;
 				LastUpgradeCheck = 0810;
-				ORGANIZATIONNAME = "Payfort (http://payfort.com)";
+				ORGANIZATIONNAME = "Payfort (https://start.payfort.com)";
 				TargetAttributes = {
 					831FA93A1DE983D900B6B467 = {
 						CreatedOnToolsVersion = 8.1;

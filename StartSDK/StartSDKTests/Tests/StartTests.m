@@ -3,7 +3,7 @@
 //  StartSDK
 //
 //  Created by drif on 11/26/16.
-//  Copyright © 2016 Payfort (http://payfort.com). All rights reserved.
+//  Copyright © 2016 Payfort (https://start.payfort.com). All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
@@ -46,6 +46,7 @@ typedef void (^StartTestsBlock)();
 
 @interface StartOperation (StartTests)
 
+- (void)showVerificationAlert;
 - (void)finalizeVerification;
 
 @end
@@ -60,12 +61,12 @@ typedef void (^StartTestsBlock)();
 
 #pragma mark - StartOperation methods
 
-- (void)finalizeVerification {
+- (void)showVerificationAlert {
     if (self.onFinalize) {
         self.onFinalize();
     }
     else {
-        [super finalizeVerification];
+        [self finalizeVerification];
     }
 }
 
