@@ -10,12 +10,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/** Name of exception thrown when trying to create StartCard with invalid values. */
 extern NSExceptionName const StartExceptionCardFieldsInvalid;
+
+/** Internal exception name. */
 extern NSExceptionName const StartExceptionTokenDataInvalid;
+
+/** Internal exception name. */
 extern NSExceptionName const StartExceptionVerificationDataInvalid;
 
+/** Exception userInfo key of NSSet of errors caused the exception. */
 extern NSString *const StartExceptionKeyErrors;
 
+/** Exception thrown by StartSDK methods. */
 @interface StartException : NSException
 
 @end
