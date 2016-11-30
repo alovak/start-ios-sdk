@@ -124,9 +124,9 @@
 #if DEBUG
     self.numberTextField.text = @"4242424242424242";
     self.monthTextField.text = @"11";
-    self.yearTextField.text = @"2016";
+    self.yearTextField.text = @"16";
     self.cvcTextField.text = @"123";
-    self.cardholderTextField.text = @"Abdullah Mohammed";
+    self.cardholderTextField.text = @"John Smith";
 #endif
 }
 

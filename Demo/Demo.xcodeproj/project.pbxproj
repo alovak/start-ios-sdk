@@ -39,7 +39,7 @@
 		831FA97D1DEB069800B6B467 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		831FA9851DEB079900B6B467 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		831FA9861DEB079900B6B467 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		831FA98A1DEB1AA900B6B467 /* StartSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StartSDK.framework; path = "../../../../Library/Developer/Xcode/DerivedData/PayfortStart-duahkxnbkrhngjcesqwyxnbsqcvt/Build/Products/Debug-iphonesimulator/StartSDK.framework"; sourceTree = "<group>"; };
+		831FA98A1DEB1AA900B6B467 /* StartSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StartSDK.framework; path = "../Debug-iphonesimulator/StartSDK.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8350F2CB1DECDAC700C65FE0 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
