@@ -66,7 +66,7 @@ extern NSString *const StartErrorKeyResponse;
  *
  * @see https://docs.start.payfort.com/guides/api_keys/#how-to-get-api-keys.
  */
-- (instancetype)initWithAPIKey:(NSString *)apiKey NS_DESIGNATED_INITIALIZER;
++ (instancetype)startWithAPIKey:(NSString *)apiKey;
 
 /** Creates StartToken for charge of amount of currency specified using StartCard specified.
  *

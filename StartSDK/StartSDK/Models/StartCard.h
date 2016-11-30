@@ -17,17 +17,17 @@ typedef NS_ENUM(NSInteger, StartCardBrand) {
     StartCardBrandMasterCard
 };
 
-/** Code of error with StartCardError domain. */
-typedef NS_ENUM(NSInteger, StartCardErrorCode) {
-    StartCardErrorCodeInvalidCardholder,
-    StartCardErrorCodeInvalidNumber,
-    StartCardErrorCodeInvalidCVC,
-    StartCardErrorCodeInvalidExpirationYear,
-    StartCardErrorCodeInvalidExpirationMonth
-};
-
-/** Domain of error occured when executing StartCard methods. */
+/** Domain of error occured when trying to create StartCard with invalid values. */
 extern NSErrorDomain const StartCardError;
+
+/** Error userInfo key of NSArray of values caused the error. */
+extern NSString *const StartCardErrorKeyValues;
+
+extern NSString *const StartCardValueCardholder;
+extern NSString *const StartCardValueNumber;
+extern NSString *const StartCardValueCVC;
+extern NSString *const StartCardValueExpirationYear;
+extern NSString *const StartCardValueExpirationMonth;
 
 /** Represents a card for charges. */
 @interface StartCard : NSObject
@@ -58,21 +58,21 @@ extern NSErrorDomain const StartCardError;
 
 /** Creates StartCard object representing the card specified.
  *
- * @throws StartException with StartExceptionCardFieldsInvalid name containing errors with StartCardError domain and StartCardErrorCode codes for StartExceptionKeyErrors key in userInfo.
- *
  * @param cardholder Name of the holder of the card; whitespace chars will be trimmed; valid value example: "John Smith"
  * @param number Card number; non-digit chars will be ignored; valid values examples: "4242424242424242", "4242-4242-4242-4242", "4242 4242 4242 4242".
  * @param cvc CVC card code; non-digit chars will be ignored; valid values examples: "123", "1-123".
  * @param expirationMonth Card expiration month; "1" stays for January, "12" -- for December.
  * @param expirationYear Card expiration year in full 4-digit form, f.e. "2020".
+ * @param error Pointer to pass the error object if error occurs.
  *
  * @returns StartCard object represeting the card specified.
  */
-- (instancetype)initWithCardholder:(NSString *)cardholder
-                            number:(NSString *)number
-                               cvc:(NSString *)cvc
-                   expirationMonth:(NSInteger)expirationMonth
-                    expirationYear:(NSInteger)expirationYear NS_DESIGNATED_INITIALIZER;
++ (nullable instancetype)cardWithCardholder:(NSString *)cardholder
+                                     number:(NSString *)number
+                                        cvc:(NSString *)cvc
+                            expirationMonth:(NSInteger)expirationMonth
+                             expirationYear:(NSInteger)expirationYear
+                                      error:(NSError **)error;
 
 @end
 

@@ -21,11 +21,12 @@
 #pragma mark - Interface methods
 
 - (void)testParams {
-    StartCard *card = [[StartCard alloc] initWithCardholder:@"John Smith"
-                                                         number:@"4111111111111111"
-                                                            cvc:@"123"
-                                                expirationMonth:1
-                                                 expirationYear:2020];
+    StartCard *card = [StartCard cardWithCardholder:@"John Smith"
+                                             number:@"4111111111111111"
+                                                cvc:@"123"
+                                    expirationMonth:1
+                                     expirationYear:2020
+                                              error:nil];
 
     StartTokenRequest *request = [[StartTokenRequest alloc] initWithCard:card];
 
@@ -37,11 +38,12 @@
 }
 
 - (void)testResponse {
-    StartCard *card = [[StartCard alloc] initWithCardholder:@"John Smith"
-                                                         number:@"4111111111111111"
-                                                            cvc:@"123"
-                                                expirationMonth:1
-                                                 expirationYear:2020];
+    StartCard *card = [StartCard cardWithCardholder:@"John Smith"
+                                             number:@"4111111111111111"
+                                                cvc:@"123"
+                                    expirationMonth:1
+                                     expirationYear:2020
+                                              error:nil];
 
     StartTokenRequest *request = [[StartTokenRequest alloc] initWithCard:card];
 

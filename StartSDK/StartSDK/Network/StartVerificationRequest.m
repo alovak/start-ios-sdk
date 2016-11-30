@@ -9,7 +9,6 @@
 #import "StartVerificationRequest.h"
 #import "StartTokenEntity.h"
 #import "StartVerification.h"
-#import "StartException.h"
 #import "StartAPIClient.h"
 
 @implementation StartVerificationRequest {
@@ -68,7 +67,10 @@
         _verification = [[StartVerification alloc] initWithDictionary:response];
         return ![_method isEqualToString:@"GET"] || _verification.isFinalized;
     }
-    @catch (StartException *) {
+    @catch (NSException *exception) {
+        if (exception.name != StartAPIClientInvalidDataExceptionName) {
+            [exception raise];
+        }
         return NO;
     }
 }

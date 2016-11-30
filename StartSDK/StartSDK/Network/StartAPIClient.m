@@ -10,6 +10,7 @@
 #import "StartAPIClientRequest.h"
 #import "StartAPIClientOperation.h"
 
+NSString *const StartAPIClientInvalidDataExceptionName = @"StartAPIClientInvalidDataExceptionName";
 NSErrorDomain const StartAPIClientError = @"StartAPIClientError";
 NSErrorDomain const StartAPIClientErrorKeyResponse = @"StartAPIClientErrorKeyResponse";
 NSInteger const StartAPIClientRetryAttemptsCount = 3;

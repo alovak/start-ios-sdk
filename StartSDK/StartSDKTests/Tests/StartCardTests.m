@@ -8,7 +8,6 @@
 
 #import <XCTest/XCTest.h>
 #import "StartCard.h"
-#import "StartException.h"
 #import "NSDate+Start.h"
 
 @interface StartCardTests : XCTestCase
@@ -20,85 +19,69 @@
 #pragma mark - Interface methods
 
 - (StartCard *)cardWithNumber:(NSString *)number {
-    return [[StartCard alloc] initWithCardholder:@"John Smith"
-                                            number:number
-                                               cvc:@"123"
-                                   expirationMonth:1
-                                    expirationYear:2020];
+    return [StartCard cardWithCardholder:@"John Smith"
+                                  number:number
+                                     cvc:@"123"
+                         expirationMonth:1
+                          expirationYear:2020
+                                   error:nil];
 }
 
-- (void)performTestWithCardCreator:(StartCard *(^)(id value))cardCreator
+- (void)performTestWithCardCreator:(void (^)(id value, NSError **error))cardCreator
                        validValues:(NSArray *)validValues
                      invalidValues:(NSArray *)invalidValues
                        fieldToTest:(NSString *)fieldToTest
-                     errorToExpect:(StartCardErrorCode)errorToExpect {
+              invalidValueToExpect:(NSString *)invalidValueToExpect {
 
-    @try {
-        for (NSString *value in validValues) {
-            cardCreator(value);
-        }
-    }
-    @catch (StartException *) {
-        XCTAssert(NO, @"Expecting successful initialization with correct %@ value", fieldToTest);
+    NSError *error;
+
+    for (NSString *value in validValues) {
+        cardCreator(value, &error);
+        XCTAssertNil(error, @"Expecting successful initialization with correct %@ value", fieldToTest);
+        error = nil;
     }
 
     for (NSString *value in invalidValues) {
-        XCTAssert([self gotValidationErrorWithCode:errorToExpect whenExecuting:^{
-            cardCreator(value);
-        }], @"Expecting validation exception during initialization with invalid %@ value", fieldToTest);
+        cardCreator(value, &error);
+        XCTAssertEqual(error.domain, StartCardError, @"Expecting valid error domain");
+        XCTAssertEqualObjects(error.userInfo[StartCardErrorKeyValues], @[invalidValueToExpect], @"Expecting valid error value");
+        error = nil;
     }
-    XCTAssert([self gotValidationErrorWithCode:errorToExpect whenExecuting:^{
-        cardCreator(nil);
-    }], @"Expecting validation exception during initialization with invalid %@ value", fieldToTest);
-}
 
-- (BOOL)gotValidationErrorsWithCodes:(NSSet *)codes whenExecuting:(void (^)())block {
-    @try {
-        block();
-    }
-    @catch (StartException *exception) {
-        NSMutableSet *exceptionCodes = [NSMutableSet set];
-        [exception.userInfo[StartExceptionKeyErrors] enumerateObjectsUsingBlock:^(NSError *error, NSUInteger idx, BOOL *stop) {
-            if (error.domain == StartCardError) {
-                [exceptionCodes addObject:@(error.code)];
-            }
-        }];
-        return [exceptionCodes isEqualToSet:codes];
-    }
-    return NO;
-}
-
-- (BOOL)gotValidationErrorWithCode:(StartCardErrorCode)code whenExecuting:(void (^)())block {
-    return [self gotValidationErrorsWithCodes:[NSSet setWithObject:@(code)] whenExecuting:block];
+    cardCreator(nil, &error);
+    XCTAssertEqual(error.domain, StartCardError, @"Expecting valid error domain");
+    XCTAssertEqualObjects(error.userInfo[StartCardErrorKeyValues], @[invalidValueToExpect], @"Expecting valid error value");
 }
 
 #pragma mark - Interface methods
 
 - (void)testCardholderValidation {
-    [self performTestWithCardCreator:^StartCard *(id value) {
-        return [[StartCard alloc] initWithCardholder:value
-                                                number:@"4111111111111111"
-                                                   cvc:@"123"
-                                       expirationMonth:1
-                                        expirationYear:2020];
-    } validValues:@[
+    [self performTestWithCardCreator:^(id value, NSError **error) {
+        [StartCard cardWithCardholder:value
+                               number:@"4111111111111111"
+                                  cvc:@"123"
+                      expirationMonth:1
+                       expirationYear:2020
+                                error:error];
+    }                    validValues:@[
             @"John Smith",
             @"  \tJohn Smith   ",
             @"J"
-    ] invalidValues:@[
+    ]                  invalidValues:@[
             @"",
             @"   \t  \n  "
-    ] fieldToTest:@"cardholder" errorToExpect:StartCardErrorCodeInvalidCardholder];
+    ]                    fieldToTest:@"cardholder" invalidValueToExpect:StartCardValueCardholder];
 }
 
 - (void)testNumberValidation {
-    [self performTestWithCardCreator:^StartCard *(id value) {
-        return [[StartCard alloc] initWithCardholder:@"John Smith"
-                                                number:value
-                                                   cvc:@"123"
-                                       expirationMonth:1
-                                        expirationYear:2020];
-    } validValues:@[
+    [self performTestWithCardCreator:^(id value, NSError **error) {
+        [StartCard cardWithCardholder:@"John Smith"
+                               number:value
+                                  cvc:@"123"
+                      expirationMonth:1
+                       expirationYear:2020
+                                error:error];
+    }                    validValues:@[
             @"378 2822 4631 0005",
             @"3714-4963-5398-43-1",
             @"3787\\t3449\\t367 10-00",
@@ -116,85 +99,96 @@
             @"4222222222222",
             @"5019717010103742",
             @"6331101999990016"
-    ] invalidValues:@[
+    ]                  invalidValues:@[
             @"4111111111111112",
             @"1",
             @"a",
             @"aa111111111111111"
-    ] fieldToTest:@"number" errorToExpect:StartCardErrorCodeInvalidNumber];
+    ]                    fieldToTest:@"number" invalidValueToExpect:StartCardValueNumber];
 }
 
 - (void)testCVCValidation {
-    [self performTestWithCardCreator:^StartCard *(id value) {
-        return [[StartCard alloc] initWithCardholder:@"John Smith"
-                                                number:@"4111111111111111"
-                                                   cvc:value
-                                       expirationMonth:1
-                                        expirationYear:2020];
-    } validValues:@[
+    [self performTestWithCardCreator:^(id value, NSError **error) {
+        [StartCard cardWithCardholder:@"John Smith"
+                               number:@"4111111111111111"
+                                  cvc:value
+                      expirationMonth:1
+                       expirationYear:2020
+                                error:error];
+    }                    validValues:@[
             @"123",
             @"1234",
             @"  123   "
-    ] invalidValues:@[
+    ]                  invalidValues:@[
             @"",
             @"12",
             @"12345",
             @"abc"
-    ] fieldToTest:@"cvc" errorToExpect:StartCardErrorCodeInvalidCVC];
+    ]                    fieldToTest:@"cvc" invalidValueToExpect:StartCardValueCVC];
 }
 
 - (void)testExpirationMonthValidation {
-    [self performTestWithCardCreator:^StartCard *(id value) {
-        return [[StartCard alloc] initWithCardholder:@"John Smith"
-                                                number:@"4111111111111111"
-                                                   cvc:@"123"
-                                       expirationMonth:[[value firstObject] integerValue]
-                                        expirationYear:[[value lastObject] integerValue] ?: 2020];
-    } validValues:@[
+    [self performTestWithCardCreator:^(id value, NSError **error) {
+        [StartCard cardWithCardholder:@"John Smith"
+                               number:@"4111111111111111"
+                                  cvc:@"123"
+                      expirationMonth:[[value firstObject] integerValue]
+                       expirationYear:[[value lastObject] integerValue] ?: 2020
+                                error:error];
+    }                    validValues:@[
             @[@([NSDate date].startMonth), @([NSDate date].startYear)],
             @[@([NSDate date].startMonth + 1), @([NSDate date].startYear)],
             @[@(1), @([NSDate date].startYear + 1)],
             @[@(12), @([NSDate date].startYear + 1)]
-    ] invalidValues:@[
+    ]                  invalidValues:@[
             @[@([NSDate date].startMonth - 1), @([NSDate date].startYear)],
             @[@(0), @([NSDate date].startYear + 1)],
             @[@(13), @([NSDate date].startYear + 1)]
-    ] fieldToTest:@"expiration month" errorToExpect:StartCardErrorCodeInvalidExpirationMonth];
+    ]                    fieldToTest:@"expiration month" invalidValueToExpect:StartCardValueExpirationMonth];
 }
 
 - (void)testExpirationYearValidation {
-    [self performTestWithCardCreator:^StartCard *(id value) {
-        return [[StartCard alloc] initWithCardholder:@"John Smith"
-                                                number:@"4111111111111111"
-                                                   cvc:@"123"
-                                       expirationMonth:[[value firstObject] integerValue] ?: 1
-                                        expirationYear:[[value lastObject] integerValue]];
-    } validValues:@[
+    [self performTestWithCardCreator:^(id value, NSError **error) {
+        [StartCard cardWithCardholder:@"John Smith"
+                               number:@"4111111111111111"
+                                  cvc:@"123"
+                      expirationMonth:[[value firstObject] integerValue] ?: 1
+                       expirationYear:[[value lastObject] integerValue]
+                                error:error];
+    }                    validValues:@[
             @[@([NSDate date].startMonth), @([NSDate date].startYear)],
             @[@([NSDate date].startMonth), @([NSDate date].startYear + 1)]
-    ] invalidValues:@[
+    ]                  invalidValues:@[
             @[@([NSDate date].startMonth), @([NSDate date].startYear - 1)]
-    ] fieldToTest:@"expiration year" errorToExpect:StartCardErrorCodeInvalidExpirationYear];
+    ]                    fieldToTest:@"expiration year" invalidValueToExpect:StartCardValueExpirationYear];
 }
 
 - (void)testMultipleValidationErrors {
-    NSSet *codes = [NSSet setWithObjects:@(StartCardErrorCodeInvalidCVC), @(StartCardErrorCodeInvalidExpirationMonth), nil];
-    XCTAssert([self gotValidationErrorsWithCodes:codes whenExecuting:^{
-        __unused StartCard *card = [[StartCard alloc] initWithCardholder:@"John Smith"
-                                                                  number:@"4111111111111111"
-                                                                     cvc:@"123456"
-                                                         expirationMonth:13
-                                                          expirationYear:2020];
-    }], @"Expecting multiple validation exceptions during initialization");
+    NSSet *codes;
+    NSError *error;
 
-    codes = [NSSet setWithObjects:@(StartCardErrorCodeInvalidCardholder), @(StartCardErrorCodeInvalidNumber), @(StartCardErrorCodeInvalidCVC), nil];
-    XCTAssert([self gotValidationErrorsWithCodes:codes whenExecuting:^{
-        __unused StartCard *card = [[StartCard alloc] initWithCardholder:@"  "
-                                                                  number:@"1234111111111111111"
-                                                                     cvc:@"123456"
-                                                         expirationMonth:1
-                                                          expirationYear:2020];
-    }], @"Expecting multiple validation exceptions during initialization");
+    [StartCard cardWithCardholder:@"John Smith"
+                           number:@"4111111111111111"
+                              cvc:@"123456"
+                  expirationMonth:13
+                   expirationYear:2020
+                            error:&error];
+
+    codes = [NSSet setWithObjects:StartCardValueCVC, StartCardValueExpirationMonth, nil];
+    XCTAssertEqual(error.domain, StartCardError, @"Expecting valid error domain");
+    XCTAssertEqualObjects([NSSet setWithArray:error.userInfo[StartCardErrorKeyValues]], codes, @"Expecting valid error value");
+    error = nil;
+
+    [StartCard cardWithCardholder:@"  "
+                           number:@"1234111111111111111"
+                              cvc:@"123456"
+                  expirationMonth:1
+                   expirationYear:2020
+                            error:&error];
+
+    codes = [NSSet setWithObjects:StartCardValueCardholder, StartCardValueNumber, StartCardValueCVC, nil];
+    XCTAssertEqual(error.domain, StartCardError, @"Expecting valid error domain");
+    XCTAssertEqualObjects([NSSet setWithArray:error.userInfo[StartCardErrorKeyValues]], codes, @"Expecting valid error value");
 }
 
 - (void)testBrandDetecting {

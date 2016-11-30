@@ -17,6 +17,7 @@ typedef NS_ENUM(NSInteger, StartAPIClientErrorCode) {
     StartAPIClientErrorCodeServerError
 };
 
+extern NSString *const StartAPIClientInvalidDataExceptionName;
 extern NSErrorDomain const StartAPIClientError;
 extern NSErrorDomain const StartAPIClientErrorKeyResponse;
 extern NSInteger const StartAPIClientRetryAttemptsCount;

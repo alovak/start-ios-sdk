@@ -22,14 +22,7 @@ NSString *const StartErrorKeyResponse = @"StartErrorKeyResponse";
     StartAPIClient *_apiClient;
 }
 
-#pragma mark - NSObject methods
-
-- (instancetype)init {
-    // overriding designated initializer of superclass
-    return [self initWithAPIKey:@""];
-}
-
-#pragma mark - Interface methods
+#pragma mark - Private methods
 
 - (instancetype)initWithAPIKey:(NSString *)apiKey {
     self = [super init];
@@ -37,6 +30,12 @@ NSString *const StartErrorKeyResponse = @"StartErrorKeyResponse";
         _apiClient = [[StartAPIClient alloc] initWithBase:StartBase apiKey:apiKey];
     }
     return self;
+}
+
+#pragma mark - Interface methods
+
++ (instancetype)startWithAPIKey:(NSString *)apiKey {
+    return [[self alloc] initWithAPIKey:apiKey];
 }
 
 - (void)createTokenForCard:(StartCard *)card

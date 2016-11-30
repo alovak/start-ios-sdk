@@ -9,7 +9,6 @@
 #import "StartTokenRequest.h"
 #import "StartCard.h"
 #import "StartTokenEntity.h"
-#import "StartException.h"
 #import "StartAPIClient.h"
 
 @implementation StartTokenRequest {
@@ -60,7 +59,10 @@
         _token = [[StartTokenEntity alloc] initWithDictionary:response];
         return YES;
     }
-    @catch (StartException *) {
+    @catch (NSException *exception) {
+        if (exception.name != StartAPIClientInvalidDataExceptionName) {
+            [exception raise];
+        }
         return NO;
     }
 }

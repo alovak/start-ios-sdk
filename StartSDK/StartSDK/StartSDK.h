@@ -9,4 +9,3 @@
 #import <StartSDK/Start.h>
 #import <StartSDK/StartToken.h>
 #import <StartSDK/StartCard.h>
-#import <StartSDK/StartException.h>

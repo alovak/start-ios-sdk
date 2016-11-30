@@ -19,6 +19,7 @@ You can also intall SDK using [Carthage](https://github.com/Carthage/Carthage#ad
 
 	github "payfort/start-ios-sdk"
 ## Usage
+#### Objective-C
 ```objc
 @import StartSDK;
 
@@ -26,13 +27,14 @@ You can also intall SDK using [Carthage](https://github.com/Carthage/Carthage#ad
 
 NSInteger centsToPay = 100; // 1 USD
 
-StartCard *card = [[StartCard alloc] initWithCardholder:@"John Smith"
-                                                 number:@"4242424242424242"
-                                                    cvc:@"123"
-                                        expirationMonth:10
-                                         expirationYear:2020];
+StartCard *card = [StartCard cardWithCardholder:@"John Smith"
+                                         number:@"4242424242424242"
+                                            cvc:@"123"
+                                expirationMonth:10
+                                 expirationYear:2020
+                                          error:nil];
 
-Start *start = [[Start alloc] initWithAPIKey:@"your API key goes here"];
+Start *start = [Start startWithAPIKey:@"your API key goes here"];
 
 [start createTokenForCard:card amount:centsToPay currency:@"USD" successBlock:^(id <StartToken> token) {
 	// Use token.tokenId when performing payments through API
@@ -43,11 +45,35 @@ Start *start = [[Start alloc] initWithAPIKey:@"your API key goes here"];
 }];
 ```
 See [Demo view controller](Demo/Demo/ViewController.m) for more detailed example.
-#### Notes
-- `StartCard` initializer throws an exception when its fields are invalid. These fields are provided in the [exception userInfo](StartSDK/StartSDK/Models/StartCard.h).
-- `Start` shows alert telling user about additional verification if required. To provide custom texts for the alert, [localize](https://www.oneskyapp.com/academy/learn-ios-localization/) the [following keys](StartSDK/StartSDK/Models/Start.h):
-	- `payfort_start_verification_message`
-	- `payfort_start_verification_button`
+#### Swift
+```swift
+import StartSDK
+
+...
+
+let centsToPay = 100 // 1 USD
+
+let card = try! StartCard(cardholder: "John Smith",
+                              number: "4242424242424242",
+                                 cvc: "123",
+                     expirationMonth: 10,
+                      expirationYear: 2020)
+
+let start = Start(apiKey: "your API key goes here")
+
+start.createToken(for: card, amount: centsToPay, currency: "USD", successBlock: { token in
+	// Use token.tokenId when performing payments through API
+}, errorBlock: { error in
+	// Process error
+}, cancel: {
+	// User cancelled payment verification
+})
+```
+See [Demo view controller](DemoSwift/DemoSwift/ViewController.swift) for more detailed example.
+#### Note
+`Start` shows alert telling user about additional verification if required. To provide custom texts for the alert, [localize](https://www.oneskyapp.com/academy/learn-ios-localization/) the [following keys](StartSDK/StartSDK/Models/Start.h):
+- `payfort_start_verification_message`
+- `payfort_start_verification_button`
 
 ## License
 MIT License

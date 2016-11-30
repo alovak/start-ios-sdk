@@ -40,32 +40,31 @@
 }
 
 - (StartCard *)card {
-    StartCard *card;
-    NSString *errorText = nil;
+    NSError *error;
+    NSMutableString *errorText;
 
-    @try {
-        NSString *expirationYearString = [@"20" stringByAppendingString:(NSString *_Nonnull) self.yearTextField.text];
+    NSString *expirationYearString = [@"20" stringByAppendingString:(NSString *_Nonnull) self.yearTextField.text];
 
-        card = [[StartCard alloc] initWithCardholder:(NSString *_Nonnull) self.cardholderTextField.text
-                                              number:(NSString *_Nonnull) self.numberTextField.text
-                                                 cvc:(NSString *_Nonnull) self.cvcTextField.text
-                                     expirationMonth:self.monthTextField.text.integerValue
-                                      expirationYear:expirationYearString.integerValue];
-    }
-    @catch (StartException *exception) {
+    StartCard *card = [StartCard cardWithCardholder:(NSString *_Nonnull) self.cardholderTextField.text
+                                             number:(NSString *_Nonnull) self.numberTextField.text
+                                                cvc:(NSString *_Nonnull) self.cvcTextField.text
+                                    expirationMonth:self.monthTextField.text.integerValue
+                                     expirationYear:expirationYearString.integerValue
+                                              error:&error];
+
+    if (error) {
         NSDictionary *fields = @{
-                @(StartCardErrorCodeInvalidCardholder): self.cardholderTextField.placeholder,
-                @(StartCardErrorCodeInvalidNumber): self.numberTextField.placeholder,
-                @(StartCardErrorCodeInvalidCVC): self.cvcTextField.placeholder,
-                @(StartCardErrorCodeInvalidExpirationYear): self.yearTextField.placeholder,
-                @(StartCardErrorCodeInvalidExpirationMonth): self.monthTextField.placeholder
+                StartCardValueCardholder: self.cardholderTextField.placeholder,
+                StartCardValueNumber: self.numberTextField.placeholder,
+                StartCardValueCVC: self.cvcTextField.placeholder,
+                StartCardValueExpirationYear: self.yearTextField.placeholder,
+                StartCardValueExpirationMonth: self.monthTextField.placeholder
         };
 
-        NSMutableString *text = [NSMutableString stringWithString:@"The following fields are invalid:"];
-        for (NSError *error in exception.userInfo[StartExceptionKeyErrors]) {
-            [text appendFormat:@"\n%@", fields[@(error.code)]];
+        errorText = [NSMutableString stringWithString:@"The following fields are invalid:"];
+        for (NSString *value in error.userInfo[StartCardErrorKeyValues]) {
+            [errorText appendFormat:@"\n%@", fields[value]];
         }
-        errorText = text;
     }
 
     self.errorsLabel.text = errorText;
@@ -110,12 +109,21 @@
     [self resignFirstResponder];
 }
 
+#pragma mark - UIResponder methods
+
+- (BOOL)resignFirstResponder {
+    for (UITextField *textField in self.textFields) {
+        [textField resignFirstResponder];
+    }
+    return [super resignFirstResponder];
+}
+
 #pragma mark - UIViewController methods
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    _start = [[Start alloc] initWithAPIKey:@"test_open_k_46dd87e36d3a5949aa68"];
+    _start = [Start startWithAPIKey:@"test_open_k_46dd87e36d3a5949aa68"];
     _amount = 100;
     _currency = @"USD";
     
@@ -128,13 +136,6 @@
     self.cvcTextField.text = @"123";
     self.cardholderTextField.text = @"John Smith";
 #endif
-}
-
-- (BOOL)resignFirstResponder {
-    for (UITextField *textField in self.textFields) {
-        [textField resignFirstResponder];
-    }
-    return [super resignFirstResponder];
 }
 
 @end

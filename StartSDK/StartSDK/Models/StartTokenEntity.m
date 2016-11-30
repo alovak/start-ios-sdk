@@ -7,8 +7,8 @@
 //
 
 #import "StartTokenEntity.h"
-#import "StartException.h"
 #import "NSNumber+Start.h"
+#import "StartAPIClient.h"
 
 @implementation StartTokenEntity
 
@@ -25,12 +25,12 @@
     self = [super init];
     if (self) {
         if (![dictionary[@"id"] isKindOfClass:[NSString class]]) {
-            [[StartException exceptionWithName:StartExceptionTokenDataInvalid reason:nil userInfo:nil] raise];
+            [[NSException exceptionWithName:StartAPIClientInvalidDataExceptionName reason:nil userInfo:nil] raise];
         }
         _tokenId = (NSString *) dictionary[@"id"];
 
         if (![dictionary[@"verification_required"] isKindOfClass:[NSNumber class]] || ![dictionary[@"verification_required"] startIsBOOL]) {
-            [[StartException exceptionWithName:StartExceptionTokenDataInvalid reason:nil userInfo:nil] raise];
+            [[NSException exceptionWithName:StartAPIClientInvalidDataExceptionName reason:nil userInfo:nil] raise];
         }
         _isVerificationRequired = [dictionary[@"verification_required"] boolValue];
     }

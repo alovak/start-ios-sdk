@@ -7,8 +7,8 @@
 //
 
 #import "StartVerification.h"
-#import "StartException.h"
 #import "NSNumber+Start.h"
+#import "StartAPIClient.h"
 
 @implementation StartVerification
 
@@ -25,12 +25,12 @@
     self = [super init];
     if (self) {
         if (![dictionary[@"enrolled"] isKindOfClass:[NSNumber class]] || ![dictionary[@"enrolled"] startIsBOOL]) {
-            [[StartException exceptionWithName:StartExceptionVerificationDataInvalid reason:nil userInfo:nil] raise];
+            [[NSException exceptionWithName:StartAPIClientInvalidDataExceptionName reason:nil userInfo:nil] raise];
         }
         _isEnrolled = [dictionary[@"enrolled"] boolValue];
 
         if (![dictionary[@"finalized"] isKindOfClass:[NSNumber class]] || ![dictionary[@"finalized"] startIsBOOL]) {
-            [[StartException exceptionWithName:StartExceptionVerificationDataInvalid reason:nil userInfo:nil] raise];
+            [[NSException exceptionWithName:StartAPIClientInvalidDataExceptionName reason:nil userInfo:nil] raise];
         }
         _isFinalized = [dictionary[@"finalized"] boolValue];
     }

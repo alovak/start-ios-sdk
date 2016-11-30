@@ -92,17 +92,18 @@ typedef void (^StartTestsBlock)();
 }
 
 - (StartCard *)cardWithNumber:(NSString *)number {
-    return [[StartCard alloc] initWithCardholder:@"Abdullah Mohammed"
+    return [StartCard cardWithCardholder:@"Abdullah Mohammed"
                                           number:number
                                              cvc:@"123"
                                  expirationMonth:[NSDate date].startMonth
-                                  expirationYear:[NSDate date].startYear];
+                                  expirationYear:[NSDate date].startYear
+                                           error:nil];
 }
 
 #pragma mark - Interface methods
 
 - (void)testValidation {
-    Start *start = [[Start alloc] initWithAPIKey:@"test_open_k_46dd87e36d3a5949aa68"];
+    Start *start = [Start startWithAPIKey:@"test_open_k_46dd87e36d3a5949aa68"];
 
     XCTestExpectation *zeroAmountErrorExpectation = [self expectationWithDescription:@"Waiting for amount error"];
 
@@ -140,7 +141,7 @@ typedef void (^StartTestsBlock)();
 - (void)testError {
     XCTestExpectation *authErrorExpectation = [self expectationWithDescription:@"Waiting for auth error"];
 
-    Start *start = [[Start alloc] initWithAPIKey:@"test_open_k_46dd87e36d3a5949aa68 api key"];
+    Start *start = [Start startWithAPIKey:@"test_open_k_46dd87e36d3a5949aa68 api key"];
 
     [start createTokenForCard:self.card amount:1 currency:@"USD" successBlock:^(id <StartToken> token) {
     } errorBlock:^(NSError *error) {
@@ -173,7 +174,7 @@ typedef void (^StartTestsBlock)();
 - (void)testTokenWithVerificationNotRequired {
     XCTestExpectation *expectation = [self expectationWithDescription:@"Waiting for token"];
 
-    Start *start = [[Start alloc] initWithAPIKey:@"test_open_k_46dd87e36d3a5949aa68"];
+    Start *start = [Start startWithAPIKey:@"test_open_k_46dd87e36d3a5949aa68"];
 
     [start createTokenForCard:self.card amount:1 currency:@"USD" successBlock:^(id <StartToken> token) {
         XCTAssertNotNil(token.tokenId, @"Expecting token in completion block");
@@ -189,7 +190,7 @@ typedef void (^StartTestsBlock)();
 - (void)testTokenWithVerificationRequiredNotEnrolled {
     XCTestExpectation *expectation = [self expectationWithDescription:@"Waiting for token"];
 
-    Start *start = [[Start alloc] initWithAPIKey:@"live_open_k_55e06cde7fe8d3141a7e"];
+    Start *start = [Start startWithAPIKey:@"live_open_k_55e06cde7fe8d3141a7e"];
 
     [start createTokenForCard:self.card amount:1 currency:@"USD" successBlock:^(id <StartToken> token) {
         XCTAssertNotNil(token.tokenId, @"Expecting token in completion block");

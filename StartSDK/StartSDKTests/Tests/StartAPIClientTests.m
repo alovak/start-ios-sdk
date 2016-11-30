@@ -281,7 +281,7 @@ typedef void (^StartAPIClientTestsBlock)(NSURLRequest *request);
 
     [operation perform];
 
-    [self waitForExpectationsWithTimeout:1.0f handler:nil];
+    [self waitForExpectationsWithTimeout:3.0f handler:nil];
 }
 
 @end

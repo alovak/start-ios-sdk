@@ -9,10 +9,17 @@
 #import "StartCard.h"
 #import "NSString+Start.h"
 #import "NSDate+Start.h"
-#import "StartException.h"
 #import "StartCardBrandDetector.h"
 
 NSErrorDomain const StartCardError = @"StartCardError";
+
+NSString *const StartCardErrorKeyValues = @"StartCardErrorKeyValues";
+
+NSString *const StartCardValueCardholder = @"StartCardValueCardholder";
+NSString *const StartCardValueNumber = @"StartCardValueNumber";
+NSString *const StartCardValueCVC = @"StartCardValueCVC";
+NSString *const StartCardValueExpirationYear = @"StartCardValueExpirationYear";
+NSString *const StartCardValueExpirationMonth = @"StartCardValueExpirationMonth";
 
 @interface StartCard ()
 
@@ -22,30 +29,43 @@ NSErrorDomain const StartCardError = @"StartCardError";
 
 #pragma mark - Private methods
 
-- (void)validate {
-    NSMutableSet *errors = [NSMutableSet set];
+- (instancetype)initWithCardholder:(NSString *)cardholder
+                            number:(NSString *)number
+                               cvc:(NSString *)cvc
+                   expirationMonth:(NSInteger)expirationMonth
+                    expirationYear:(NSInteger)expirationYear {
+
+    self = [super init];
+    if (self) {
+        _cardholder = [cardholder stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        _number = [number startStringByRemovingCharactersInSet:[NSCharacterSet decimalDigitCharacterSet].invertedSet];
+        _cvc = [cvc startStringByRemovingCharactersInSet:[NSCharacterSet decimalDigitCharacterSet].invertedSet];
+        _expirationMonth = expirationMonth;
+        _expirationYear = expirationYear;
+    }
+    return self;
+}
+
+- (NSArray *)validate {
+    NSMutableArray *errors = [NSMutableArray array];
 
     if (!self.isCardholderValid) {
-        [errors addObject:[NSError errorWithDomain:StartCardError code:StartCardErrorCodeInvalidCardholder userInfo:nil]];
+        [errors addObject:StartCardValueCardholder];
     }
     if (!self.isNumberValid) {
-        [errors addObject:[NSError errorWithDomain:StartCardError code:StartCardErrorCodeInvalidNumber userInfo:nil]];
+        [errors addObject:StartCardValueNumber];
     }
     if (!self.isCVCValid) {
-        [errors addObject:[NSError errorWithDomain:StartCardError code:StartCardErrorCodeInvalidCVC userInfo:nil]];
+        [errors addObject:StartCardValueCVC];
     }
     if (!self.isExpirationMonthValid) {
-        [errors addObject:[NSError errorWithDomain:StartCardError code:StartCardErrorCodeInvalidExpirationMonth userInfo:nil]];
+        [errors addObject:StartCardValueExpirationMonth];
     }
     if (!self.isExpirationYearValid) {
-        [errors addObject:[NSError errorWithDomain:StartCardError code:StartCardErrorCodeInvalidExpirationYear userInfo:nil]];
+        [errors addObject:StartCardValueExpirationYear];
     }
 
-    if (errors.count) {
-        [[StartException exceptionWithName:StartExceptionCardFieldsInvalid reason:nil userInfo:@{
-                StartExceptionKeyErrors: errors
-        }] raise];
-    }
+    return errors;
 }
 
 - (BOOL)isCardholderValid {
@@ -106,33 +126,31 @@ NSErrorDomain const StartCardError = @"StartCardError";
     }
 }
 
-#pragma mark - NSObject methods
-
-- (instancetype)init {
-    // overriding designated initializer of superclass
-    return [self initWithCardholder:@"" number:@"" cvc:@"" expirationMonth:0 expirationYear:0];
-}
-
 #pragma mark - Interface methods
 
-- (instancetype)initWithCardholder:(NSString *)cardholder
++ (instancetype)cardWithCardholder:(NSString *)cardholder
                             number:(NSString *)number
                                cvc:(NSString *)cvc
                    expirationMonth:(NSInteger)expirationMonth
-                    expirationYear:(NSInteger)expirationYear {
+                    expirationYear:(NSInteger)expirationYear
+                             error:(NSError * __autoreleasing *)error
+{
 
-    self = [super init];
-    if (self) {
-        _cardholder = [cardholder stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        _number = [number startStringByRemovingCharactersInSet:[NSCharacterSet decimalDigitCharacterSet].invertedSet];
-        _cvc = [cvc startStringByRemovingCharactersInSet:[NSCharacterSet decimalDigitCharacterSet].invertedSet];
-        _expirationMonth = expirationMonth;
-        _expirationYear = expirationYear;
+    StartCard *card = [[StartCard alloc] initWithCardholder:cardholder number:number cvc:cvc expirationMonth:expirationMonth expirationYear:expirationYear];
+    NSArray *errors = [card validate];
 
-        [self validate];
-        [self detectBrand];
+    if (errors.count) {
+        if (error) {
+            *error = [NSError errorWithDomain:StartCardError code:0 userInfo:@{
+                    StartCardErrorKeyValues: errors
+            }];
+        }
+        return nil;
     }
-    return self;
+
+    [card detectBrand];
+
+    return card;
 }
 
 - (NSString *)lastDigits {
