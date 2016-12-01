@@ -260,7 +260,7 @@ typedef void (^StartAPIClientTestsBlock)(NSURLRequest *request);
 
     [operation perform];
 
-    [self waitForExpectationsWithTimeout:1.0f handler:nil];
+    [self waitForExpectationsWithTimeout:5.0f handler:nil];
 }
 
 - (void)testNoRetry {

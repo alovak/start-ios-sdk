@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/payfort/start-ios-sdk.svg?branch=master)](https://travis-ci.org/payfort/start-ios-sdk)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 # Start iOS SDK
 *Start is a payment gateway for Startups*

@@ -137,11 +137,11 @@
                                 error:error];
     }                    validValues:@[
             @[@([NSDate date].startMonth), @([NSDate date].startYear)],
-            @[@([NSDate date].startMonth + 1), @([NSDate date].startYear)],
+            @[@([NSDate date].startMonth + 1 <= 12 ? [NSDate date].startMonth + 1 : 1), @([NSDate date].startMonth + 1 <= 12 ? [NSDate date].startYear : [NSDate date].startYear + 1)],
             @[@(1), @([NSDate date].startYear + 1)],
             @[@(12), @([NSDate date].startYear + 1)]
     ]                  invalidValues:@[
-            @[@([NSDate date].startMonth - 1), @([NSDate date].startYear)],
+            @[@([NSDate date].startMonth - 1 >= 1 ? [NSDate date].startMonth - 1 : 12), @([NSDate date].startMonth - 1 >= 1 ? [NSDate date].startYear : [NSDate date].startYear - 1)],
             @[@(0), @([NSDate date].startYear + 1)],
             @[@(13), @([NSDate date].startYear + 1)]
     ]                    fieldToTest:@"expiration month" invalidValueToExpect:StartCardValueExpirationMonth];
